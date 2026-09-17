@@ -1,0 +1,396 @@
+/* --- Глобални Минималистични Настройки --- */
+:root {
+    --primary-color: #2b2d42;     /* Тънкосиво (основен цвят за текст и навигация) */
+    --accent-color: #d90429;      /* Ярко червено (за бутони, цени, икони и акценти) */
+    --bg-white: #ffffff;          /* Чисто бяло за фонове на страници и картички */
+    --bg-light: #f8f9fa;          /* Светлосиво за лек контраст при секции */
+    --text-muted: #8d99ae;        /* За по-незначителни текстове */
+    --border-color: #e5e5e5;      /* Нежни граници */
+    --danger-disabled: #ccd1d9;   /* Сиво за неактивни бутони */
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    color: var(--primary-color);
+    background-color: var(--bg-white);
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.2s ease;
+}
+
+/* --- Навигация (Header) --- */
+.main-header {
+    background-color: var(--bg-white);
+    border-bottom: 1px solid var(--border-color);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    padding: 15px 0;
+}
+
+.header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo a {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--primary-color);
+    letter-spacing: -0.5px;
+}
+
+.logo span {
+    color: var(--accent-color); /* .bg в червено */
+}
+
+.main-nav ul {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+}
+
+.main-nav a {
+    font-weight: 500;
+    color: var(--primary-color);
+}
+
+.main-nav a:hover, .main-nav a.active {
+    color: var(--accent-color);
+    border-bottom: 2px solid var(--accent-color);
+    padding-bottom: 5px;
+}
+
+/* --- Бутони (Червени и минималистични) --- */
+.btn-primary {
+    background-color: var(--accent-color);
+    color: var(--bg-white);
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: 500;
+}
+
+.btn-primary:hover {
+    background-color: #b30320; /* По-тъмно червено при ховър */
+}
+
+.btn-link {
+    margin-right: 15px;
+    font-weight: 500;
+    color: var(--primary-color);
+}
+
+.btn-link:hover {
+    color: var(--accent-color);
+}
+
+.btn-accent {
+    background-color: var(--accent-color);
+    color: var(--bg-white);
+    border: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-accent:hover {
+    background-color: #b30320;
+}
+
+.btn-secondary {
+    border: 1px solid var(--accent-color);
+    color: var(--accent-color);
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: 500;
+}
+
+.btn-secondary:hover {
+    background-color: var(--accent-color);
+    color: var(--bg-white);
+}
+
+.btn-disabled {
+    background-color: var(--danger-disabled);
+    color: var(--bg-white);
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: not-allowed;
+}
+
+/* --- Форма за Търсене (Search Box) --- */
+.search-section {
+    background-color: var(--bg-light);
+    padding: 40px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.search-box {
+    background: var(--bg-white);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.search-box h3 {
+    margin-bottom: 20px;
+    color: var(--primary-color);
+    font-size: 20px;
+}
+
+.search-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: flex-end;
+}
+
+.form-group {
+    flex: 1;
+    min-width: 220px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+.form-group label i {
+    color: var(--accent-color); /* Червени икони във формата */
+    margin-right: 5px;
+}
+
+.form-group select, .form-group input {
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    outline: none;
+    font-size: 15px;
+    background-color: var(--bg-light);
+    color: var(--primary-color);
+}
+
+/* --- Каталог и Картички за Коли --- */
+.catalog-section {
+    padding: 60px 20px;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.section-title h2 {
+    font-size: 32px;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+}
+
+.section-title p {
+    color: var(--text-muted);
+}
+
+.cars-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 30px;
+}
+
+.car-card {
+    background: var(--bg-white);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.car-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+.badge {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background: var(--primary-color);
+    color: var(--bg-white);
+    padding: 4px 10px;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 20px;
+    z-index: 10;
+}
+
+.car-image-wrapper {
+    width: 100%;
+    height: 200px;
+    background-color: var(--bg-light);
+}
+
+.car-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.car-details {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.car-details h3 {
+    font-size: 20px;
+    margin-bottom: 15px;
+    color: var(--primary-color);
+}
+
+.car-specs {
+    display: flex;
+    gap: 15px;
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 25px;
+    border-bottom: 1px solid var(--bg-light);
+    padding-bottom: 15px;
+}
+
+.car-specs i {
+    color: var(--accent-color); /* Иконите на спецификациите стават червени */
+}
+
+.car-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+}
+
+.price-value {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--accent-color); /* Червена цена */
+}
+
+.price-period {
+    font-size: 14px;
+    color: var(--text-muted);
+}
+
+/* Специфичен клас за заета кола */
+.car-card.unavailable {
+    opacity: 0.75;
+}
+
+/* --- Долна част (Footer - Тъмно сиво и Червено) --- */
+.main-footer {
+    background-color: var(--primary-color); /* Тъмно сив фон за фуутъра */
+    color: #e5e5e5;
+    padding: 60px 0 20px 0;
+    margin-top: 60px;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 40px;
+    margin-bottom: 40px;
+}
+
+.footer-about h4, .footer-links h4, .footer-contacts h4 {
+    color: var(--bg-white);
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.footer-about h4 span {
+    color: var(--accent-color); /* Червено за .bg във фуутъра */
+}
+
+.footer-links ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.footer-links a:hover {
+    color: var(--accent-color);
+    padding-left: 5px;
+}
+
+.footer-contacts p {
+    margin-bottom: 10px;
+}
+
+.footer-contacts i {
+    margin-right: 10px;
+    color: var(--accent-color); /* Червени икони за контакти */
+}
+
+.social-icons {
+    margin-top: 15px;
+    display: flex;
+    gap: 15px;
+}
+
+.social-icons a {
+    font-size: 20px;
+    color: #e5e5e5;
+}
+
+.social-icons a:hover {
+    color: var(--accent-color);
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    font-size: 14px;
+    color: var(--text-muted);
+}
+
+/* --- Адаптивност (Responsive) --- */
+@media (max-width: 768px) {
+    .header-flex {
+        flex-direction: column;
+        gap: 15px;
+    }
+    .search-form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .btn-accent {
+        width: 100%;
+    }
+}
