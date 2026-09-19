@@ -1,9 +1,10 @@
-export default function CarCard({carClass, imageURL, carModel, carGear, carGas, carSeats, carPrice}) {
+export default function CarCard({ carClass, imageURL, carModel, carGear, carGas, carSeats, carPrice, isAvailable }) {
     return (
-        <article className="car-card" >
+        <article className={`car-card ${!isAvailable && 'unavailable'}`}>
+            {/* <article className="car-card" > */}
             <span className="badge luxury">{carClass}</span>
             <div className="car-image-wrapper">
-                <img src={imageURL} alt="Renault Austral" />
+                <img src={imageURL} alt={carModel} />
             </div>
             <div className="car-details">
                 <h3>{carModel}</h3>
@@ -17,7 +18,11 @@ export default function CarCard({carClass, imageURL, carModel, carGear, carGas, 
                         <span className="price-value">€{carPrice}</span>
                         <span className="price-period">/ ден</span>
                     </div>
-                    <a href="#" className="btn-secondary">Виж детайли</a>
+                    {isAvailable ? (
+                        <button className="btn-secondary">Виж детайли</button>
+                    ) : (
+                        <button className="btn-disabled" disabled>Резервирана</button>
+                    )}
                 </div>
             </div>
         </article>
