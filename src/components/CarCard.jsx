@@ -1,7 +1,6 @@
 export default function CarCard({ carClass, imageURL, carModel, carGear, carGas, carSeats, carPrice, isAvailable }) {
     return (
         <article className={`car-card ${!isAvailable && 'unavailable'}`}>
-            {/* <article className="car-card" > */}
             <span className="badge luxury">{carClass}</span>
             <div className="car-image-wrapper">
                 <img src={imageURL} alt={carModel} />

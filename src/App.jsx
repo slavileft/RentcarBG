@@ -1,6 +1,7 @@
 import Header from "./components/Header.jsx"
 import Footer from "./components/Footer.jsx"
-import Main from "./components/Main.jsx"
+import Booking from "./components/Booking.jsx"
+import Catalog from "./components/Catalog.jsx"
 
 function App() {
     return (
@@ -9,7 +10,14 @@ function App() {
             <Header />
 
             {/* <!-- REACT Component: <Main /> --> */}
-            <Main />
+            <main className="main-content">
+
+                {/* <!-- REACT Component: <Booking Form /> --> */}
+                <Booking />
+
+                {/* <!-- REACT Component: <Catalog / CarList /> --> */}
+                <Catalog />
+            </main>
 
             {/* <!-- REACT Component: <Footer /> --> */}
             <Footer />
