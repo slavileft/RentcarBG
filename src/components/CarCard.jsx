@@ -1,4 +1,12 @@
-export default function CarCard({ carClass, imageURL, carModel, carGear, carGas, carSeats, carPrice, isAvailable }) {
+import { useNavigate } from "react-router";
+
+export default function CarCard({ id, carClass, imageURL, carModel, carGear, carGas, carSeats, carPrice, isAvailable }) {
+    const navigate = useNavigate();
+
+    const carDetailsClickHandler = () => {
+        navigate(`cars/${id}`)
+        
+    };
     return (
         <article className={`car-card ${!isAvailable && 'unavailable'}`}>
             <span className="badge luxury">{carClass}</span>
@@ -18,7 +26,7 @@ export default function CarCard({ carClass, imageURL, carModel, carGear, carGas,
                         <span className="price-period">/ ден</span>
                     </div>
                     {isAvailable ? (
-                        <button className="btn-secondary">Виж детайли</button>
+                        <button className="btn-secondary" onClick={carDetailsClickHandler}>Виж детайли</button>
                     ) : (
                         <button className="btn-disabled" disabled>Резервирана</button>
                     )}

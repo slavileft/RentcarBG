@@ -1,26 +1,25 @@
+import { Routes, Route } from "react-router"
+
 import Header from "./components/Header.jsx"
+import Main from "./components/Main.jsx"
 import Footer from "./components/Footer.jsx"
-import Booking from "./components/Booking.jsx"
-import Catalog from "./components/Catalog.jsx"
+import CarDetails from "./components/CarDetails.jsx";
+import Contacts from "./components/Contacts.jsx";
 
 function App() {
+
     return (
         <>
-            {/* <!-- REACT Component: <Header /> --> */}
             <Header />
 
-            {/* <!-- REACT Component: <Main /> --> */}
-            <main className="main-content">
+            <Routes>
+                <Route path="/" element={<Main />} />
+                <Route path="/cars/:carId" element={<CarDetails />} />
+                <Route path="/contacts" element={<Contacts />} />
+            </Routes>
 
-                {/* <!-- REACT Component: <Booking Form /> --> */}
-                <Booking />
-
-                {/* <!-- REACT Component: <Catalog / CarList /> --> */}
-                <Catalog />
-            </main>
-
-            {/* <!-- REACT Component: <Footer /> --> */}
             <Footer />
+
         </>
     )
 }
