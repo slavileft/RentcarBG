@@ -1,16 +1,17 @@
+import { NavLink } from "react-router";
+
 export default function Header() {
     return (
         <header className="main-header">
             <div className="container header-flex">
                 <div className="logo">
-                    <a href="#">RENTCAR<span>.bg</span></a>
+                    <NavLink to="/">RENTCAR<span>.bg</span></NavLink>
                 </div>
                 <nav className="main-nav">
-                    <ul>
-                        <li><a href="#" className="active">Автомобили</a></li>
-                        <li><a href="#">Трансфери</a></li>
-                        <li><a href="#">Моите Резервации</a></li>
-                        <li><a href="#">Контакти</a></li>
+                    <ul><li><NavLink to="/">Автомобили</NavLink></li>
+                        <li><NavLink to="/transfers">Трансфери</NavLink></li>
+                        <li><NavLink to="/reservations">Моите Резервации</NavLink></li>
+                        <li><NavLink to="/contacts">Контакти</NavLink></li>
                     </ul>
                 </nav>
                 <div className="auth-buttons">

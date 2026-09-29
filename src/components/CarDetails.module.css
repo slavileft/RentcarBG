@@ -1,0 +1,159 @@
+/* --- Контейнер и Сетка --- */
+.detailsContainer {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.detailsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 40px;
+}
+
+/* --- Лява страна: Детайли за колата --- */
+.carInfoSide img {
+    width: 100%;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    object-fit: cover;
+}
+
+.carInfoSide h2 {
+    font-size: 28px;
+    color: #2b2d42;
+    margin-bottom: 5px;
+}
+
+.badge {
+    display: inline-block;
+    background-color: #2b2d42;
+    color: #ffffff;
+    padding: 5px 12px;
+    border-radius: 20px;
+    margin: 10px 0 20px 0;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.carInfoSide p {
+    color: #2b2d42;
+    margin-bottom: 20px;
+    line-height: 1.7;
+}
+
+.specsList {
+    display: flex;
+    gap: 20px;
+    color: #8d99ae;
+    font-size: 14px;
+    border-top: 1px solid #e5e5e5;
+    padding-top: 20px;
+}
+
+.specsList i {
+    color: #d90429; /* Корпоративно червено */
+    margin-right: 5px;
+}
+
+/* --- Дясна страна: Форма за Резервация --- */
+.bookingBox {
+    background-color: #f8f9fa;
+    padding: 30px;
+    border-radius: 12px;
+    border: 1px solid #e5e5e5;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+}
+
+.bookingBox h3 {
+    color: #2b2d42;
+    margin-bottom: 25px;
+    font-size: 22px;
+}
+
+.bookingForm {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.formGroup label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #8d99ae;
+}
+
+.formGroup label i {
+    color: #d90429;
+    margin-right: 5px;
+}
+
+.formGroup input {
+    padding: 12px;
+    border: 1px solid #e5e5e5;
+    border-radius: 6px;
+    background-color: #ffffff;
+    font-size: 15px;
+    color: #2b2d42;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.formGroup input:focus {
+    border-color: #d90429;
+}
+
+/* --- Резюме на цената --- */
+.priceSummary {
+    background-color: #ffffff;
+    padding: 15px;
+    border-radius: 6px;
+    border-left: 4px solid #d90429;
+    margin-top: 10px;
+}
+
+.priceSummary p {
+    font-size: 15px;
+    color: #2b2d42;
+}
+
+.priceValue {
+    color: #d90429;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+/* --- Бутони --- */
+.btnAccent {
+    background-color: #d90429;
+    color: #ffffff;
+    border: none;
+    padding: 14px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+    transition: background-color 0.2s;
+}
+
+.btnAccent:hover {
+    background-color: #b30320;
+}
+
+.btnDisabled {
+    background-color: #ccd1d9;
+    color: #ffffff;
+    border: none;
+    padding: 14px;
+    border-radius: 6px;
+    cursor: not-allowed;
+    font-size: 16px;
+    margin-top: 10px;
+}
