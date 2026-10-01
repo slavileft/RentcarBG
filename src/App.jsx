@@ -1,12 +1,12 @@
 import { Routes, Route } from "react-router"
 
-import Header from "./components/Header.jsx"
-import Main from "./components/Main.jsx"
-import Footer from "./components/Footer.jsx"
-import CarDetails from "./components/CarDetails.jsx";
-import Contacts from "./components/Contacts.jsx";
-import Transfers from "./components/Transfers.jsx";
-import MyReservations from "./components/MyReservations.jsx";
+import Header from "./components/header/Header.jsx"
+import Main from "./components/main/Main.jsx"
+import Footer from "./components/footer/Footer.jsx"
+import CarDetails from "./components/car-details/CarDetails.jsx";
+import Contacts from "./components/contacts/Contacts.jsx";
+import Transfers from "./components/transfer/Transfers.jsx";
+import MyReservations from "./components/my-reservations/MyReservations.jsx";
 
 function App() {
 

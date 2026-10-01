@@ -1,4 +1,4 @@
-import CarCard from "./CarCard";
+import CarCard from "./../car-card/CarCard";
 
 export default function Catalog({cars}) {
     return (

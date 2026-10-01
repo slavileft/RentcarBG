@@ -1,0 +1,148 @@
+/* --- Контейнер и Подредба --- */
+.contactsContainer {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 20px;
+}
+
+.contactsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 40px;
+    margin-top: 20px;
+}
+
+/* --- Споделен стил за информационните кутии --- */
+.infoBox {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    border: 1px solid #e5e5e5;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+    margin-bottom: 25px;
+}
+
+.infoBox:last-child {
+    margin-bottom: 0;
+}
+
+.infoBox h3 {
+    color: #2b2d42;
+    font-size: 20px;
+    border-bottom: 2px solid #d90429; /* Червен акцент под заглавието */
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.infoBox p {
+    margin-bottom: 15px;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+}
+
+.infoBox p:last-child {
+    margin-bottom: 0;
+}
+
+.infoBox i {
+    color: #d90429; /* Червени икони за локация, телефон и мейл */
+    margin-right: 12px;
+    font-size: 16px;
+    width: 20px;
+    text-align: center;
+}
+
+/* --- Списък с работно време --- */
+.workTimeList {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.workTimeList li {
+    font-size: 15px;
+}
+
+.workTimeList strong {
+    color: #2b2d42;
+}
+
+/* --- Специална значка за 24/7 обслужване --- */
+.deliveryBadge {
+    display: inline-block;
+    background-color: #d90429;
+    color: #ffffff;
+    padding: 8px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 6px;
+    margin-top: 10px;
+}
+
+.deliveryBadge i {
+    color: #ffffff !important;
+    margin-right: 6px;
+}
+
+/* --- Форма за контакти --- */
+.formBox {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    border: 1px solid #e5e5e5;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+}
+
+.formBox h3 {
+    color: #2b2d42;
+    margin-bottom: 25px;
+    font-size: 22px;
+}
+
+.contactForm {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.formGroup label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #8d99ae;
+}
+
+.formGroup input, .formGroup textarea {
+    padding: 12px;
+    border: 1px solid #e5e5e5;
+    border-radius: 6px;
+    outline: none;
+    font-size: 15px;
+    background-color: #f8f9fa;
+    color: #2b2d42;
+    transition: border-color 0.2s;
+}
+
+.formGroup input:focus, .formGroup textarea:focus {
+    border-color: #d90429;
+    background-color: #ffffff;
+}
+
+.formGroup textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+/* --- Адаптивност --- */
+@media (max-width: 768px) {
+    .contactsGrid {
+        grid-template-columns: 1fr;
+    }
+}

@@ -272,6 +272,13 @@ a {
     font-size: 20px;
     margin-bottom: 15px;
     color: var(--primary-color);
+    transition: color 0.3s ease;
+}
+
+.car-details h3:hover {
+    font-size: 20px;
+    margin-bottom: 15px;
+    color: var(--accent-color);
 }
 
 .car-specs {
@@ -393,4 +400,17 @@ a {
     .btn-accent {
         width: 100%;
     }
+}
+/* Допълнения за форми и икони */
+textarea:focus {
+    border-color: var(--accent-color);
+}
+
+.features-grid .search-box {
+    transition: transform 0.2s;
+}
+
+.features-grid .search-box:hover {
+    transform: translateY(-3px);
+    border-color: var(--accent-color);
 }

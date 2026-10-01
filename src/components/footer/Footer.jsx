@@ -1,9 +1,11 @@
+import { Link } from "react-router";
+
 export default function Footer() {
     return (
         <footer className="main-footer">
             <div className="container footer-grid">
                 <div className="footer-about">
-                    <h4>RENT CAR<span>.bg</span></h4>
+                    <h4>RENTCAR<span>.bg</span></h4>
                     <p>Модерни и сигурни автомобили под наем. Коректност и прозрачни условия без скрити такси.</p>
                     <div className="social-icons">
                         <a href="#"><i className="fa-brands fa-facebook"></i></a>
@@ -13,10 +15,10 @@ export default function Footer() {
                 <div className="footer-links">
                     <h4>Бързи връзки</h4>
                     <ul>
-                        <li><a href="#">Автомобили</a></li>
-                        <li><a href="#">Трансфери</a></li>
-                        <li><a href="#">Общи условия</a></li>
-                        <li><a href="#">За нас</a></li>
+                        <li><Link to="/">Автомобили</Link></li>
+                        <li><Link to="/transfers">Трансфери</Link></li>
+                        <li><Link to="#">Общи условия</Link></li>
+                        <li><Link to="#">За нас</Link></li>
                     </ul>
                 </div>
                 <div className="footer-contacts">
@@ -27,7 +29,7 @@ export default function Footer() {
                 </div>
             </div>
             <div className="footer-bottom">
-                <p>&copy; 2026 Rentcar. Всички права запазени.</p>
+                <p>&copy; {(new Date().getFullYear())} Rentcar. Всички права запазени.</p>
             </div>
         </footer>
     );

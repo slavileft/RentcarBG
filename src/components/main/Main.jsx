@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 
-import Booking from "./Booking"
-import Catalog from "./Catalog"
+import Booking from "../booking/Booking"
+import Catalog from "../catalog/Catalog"
 
 export default function Main() {
     const [cars, setCars] = useState([]);
