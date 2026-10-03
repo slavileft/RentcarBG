@@ -7,6 +7,7 @@ import CarDetails from "./components/car-details/CarDetails.jsx";
 import Contacts from "./components/contacts/Contacts.jsx";
 import Transfers from "./components/transfer/Transfers.jsx";
 import MyReservations from "./components/my-reservations/MyReservations.jsx";
+import About from "./components/about/About.jsx";
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
                 <Route path="/cars/:carId" element={<CarDetails />} />
                 <Route path="/transfers" element={<Transfers />} />
                 <Route path="/contacts" element={<Contacts />} />
+                <Route path="/about" element={<About />} />
                 <Route path="/reservations" element={<MyReservations />} />
             </Routes>
 

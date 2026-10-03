@@ -10,7 +10,7 @@ export default function CarCard({ id, carClass, imageURL, carModel, carGear, car
     
     return (
         <article className={`car-card ${!isAvailable && 'unavailable'}`}>
-            <span className="badge luxury">{carClass}</span>
+            <span className="badge">{carClass}</span>
             <div className="car-image-wrapper">
                 <img src={imageURL} alt={carModel} />
             </div>
@@ -27,7 +27,6 @@ export default function CarCard({ id, carClass, imageURL, carModel, carGear, car
                         <span className="price-period">/ ден</span>
                     </div>
                     {isAvailable ? (
-                        // TODO: Да променя текста на бутона на Резервирай и да променя функционалността за резервиране onClick
                         <button className="btn-secondary" onClick={carDetailsClickHandler}>Виж детайли</button>
                     ) : (
                         <button className="btn-disabled" disabled>Резервирана</button>

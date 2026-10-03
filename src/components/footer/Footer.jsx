@@ -18,7 +18,7 @@ export default function Footer() {
                         <li><Link to="/">Автомобили</Link></li>
                         <li><Link to="/transfers">Трансфери</Link></li>
                         <li><Link to="#">Общи условия</Link></li>
-                        <li><Link to="#">За нас</Link></li>
+                        <li><Link to="/about">За нас</Link></li>
                     </ul>
                 </div>
                 <div className="footer-contacts">

@@ -11,7 +11,7 @@ export default function Main() {
         fetch('https://mbqmgwqphsyquffalqrm.supabase.co/rest/v1/Cars', {
             method: 'GET',
             headers: {
-                'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1icW1nd3FwaHN5cXVmZmFscXJtIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc4NjM2NzUzNywiZXhwIjoyMTAxOTQzNTM3fQ.gIfaBzC4RqSkoIA6dXHKw-UDDV7jNCvQFJu8zG_XdSw',
+                'apikey': import.meta.env.VITE_API_KEY,
             }
         })
             .then(response => response.json())
