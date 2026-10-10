@@ -8,6 +8,7 @@ import Contacts from "./components/contacts/Contacts.jsx";
 import Transfers from "./components/transfer/Transfers.jsx";
 import MyReservations from "./components/my-reservations/MyReservations.jsx";
 import About from "./components/about/About.jsx";
+import Catalog from "./components/catalog/Catalog.jsx";
 
 function App() {
 

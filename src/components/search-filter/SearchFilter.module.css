@@ -1,0 +1,43 @@
+/* --- Контейнер за лентата с филтри --- */
+.filterBar {
+    margin-bottom: 40px;
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: center;
+    border: 1px solid #e5e5e5;
+}
+
+/* --- Контейнер за всяка отделна група филтър --- */
+.filterGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.filterGroup label {
+    font-weight: 600;
+    color: #2b2d42;
+    font-size: 14px;
+}
+
+/* --- Стилизация на падащите менюта (Select) --- */
+.filterSelect {
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid #e5e5e5;
+    font-size: 15px;
+    background-color: #ffffff;
+    color: #2b2d42;
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.filterSelect:focus {
+    border-color: #d90429; /* Корпоративното червено при фокус */
+    box-shadow: 0 0 0 2px rgba(219, 4, 41, 0.1);
+}

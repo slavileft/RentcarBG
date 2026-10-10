@@ -7,7 +7,6 @@ export default function Main() {
     const [cars, setCars] = useState([]);
 
     useEffect(() => {
-        // Fetch car data from supabase API
         fetch('https://mbqmgwqphsyquffalqrm.supabase.co/rest/v1/Cars', {
             method: 'GET',
             headers: {
