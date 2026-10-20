@@ -157,3 +157,22 @@
     font-size: 16px;
     margin-top: 10px;
 }
+/* Стара задраскана цена в детайлите */
+.oldPrice {
+    text-decoration: line-through;
+    color: #8d99ae;
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+/* Специфичен стил за промо цена в детайлите */
+.promoPriceValue {
+    color: #d90429 !important;
+}
+
+/* Контейнер за ценовата кутия в лявата част */
+.priceBox {
+    margin: 15px 0;
+    display: flex;
+    align-items: baseline;
+}

@@ -414,3 +414,32 @@ textarea:focus {
     transform: translateY(-3px);
     border-color: var(--accent-color);
 }
+
+/* Значка за оферта, позиционирана вдясно */
+.promo-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px; /* Вдясно, за да не си пречи с основната значка за клас вляво */
+    background-color: #d90429; /* Ярко червено */
+    color: #ffffff;
+    padding: 4px 10px;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 20px;
+    z-index: 10;
+    letter-spacing: 0.5px;
+}
+
+/* Стара задраскана цена */
+.old-price {
+    text-decoration: line-through;
+    color: #8d99ae;
+    font-size: 14px;
+    margin-right: 8px;
+}
+
+/* Специфичен червен цвят за промоционалната цена */
+.promo-price-value {
+    color: #d90429 !important;
+    font-weight: 700;
+}

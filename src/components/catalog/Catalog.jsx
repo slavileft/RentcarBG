@@ -1,11 +1,19 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 import SearchFilter from "../search-filter/SearchFilter";
 import CarCard from "./../car-card/CarCard";
+import request from "../../utils/request";
 
-export default function Catalog({ cars }) {
+export default function Catalog() {
     const [selectedClass, setSelectedClass] = useState('');
     const [selectedGear, setSelectedGear] = useState('');
+    const [cars, setCars] = useState([]);
+
+    useEffect(() => {
+        request(import.meta.env.VITE_REST_URL, "/Cars")
+            .then(data => setCars(data))
+            .catch(error => console.error('Error fetching car data:', error));
+    }, []);
 
     const filteredCars = cars.filter(car => {
         const matchesClass = selectedClass === '' || car.carClass === selectedClass;

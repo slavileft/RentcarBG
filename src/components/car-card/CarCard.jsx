@@ -1,16 +1,19 @@
 import { useNavigate } from "react-router";
 
-export default function CarCard({ id, carClass, imageURL, carModel, carGear, carGas, carSeats, carPrice, isAvailable }) {
+export default function CarCard({ id, carClass, imageURL, carModel, carGear, carGas, carSeats, carPrice, promoPrice, isAvailable }) {
     const navigate = useNavigate();
+
+    const hasPromo = promoPrice !== null && promoPrice !== undefined && promoPrice < carPrice;
 
     const carDetailsClickHandler = () => {
         navigate(`cars/${id}`)
-        
+
     };
-    
+
     return (
         <article className={`car-card ${!isAvailable && 'unavailable'}`}>
             <span className="badge">{carClass}</span>
+            {hasPromo && <span className="promo-badge">% Оферта</span>}
             <div className="car-image-wrapper">
                 <img src={imageURL} alt={carModel} />
             </div>
@@ -23,8 +26,17 @@ export default function CarCard({ id, carClass, imageURL, carModel, carGear, car
                 </div>
                 <div className="car-footer">
                     <div className="price-box">
-                        <span className="price-value">€{carPrice}</span>
+
+                        {hasPromo ? (
+                            <>
+                                <span className="old-price">€{carPrice}</span>
+                                <span className="price-value promo-price-value">€{promoPrice}</span>
+                            </>
+                        ) : (
+                            <span className="price-value">€{carPrice}</span>
+                        )}
                         <span className="price-period">/ ден</span>
+
                     </div>
                     {isAvailable ? (
                         <button className="btn-secondary" onClick={carDetailsClickHandler}>Виж детайли</button>

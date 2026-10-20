@@ -1,0 +1,27 @@
+.offersContainer {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.titleSection {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.titleSection h2 {
+    font-size: 32px;
+    color: #2b2d42; /* Тъмносиво */
+    margin-bottom: 10px;
+}
+
+.titleSection p {
+    color: #8d99ae;
+}
+
+.noOffers {
+    text-align: center;
+    color: #8d99ae;
+    padding: 40px 0;
+    font-size: 16px;
+}

@@ -1,6 +1,7 @@
 import { useParams } from 'react-router';
 import styles from './CarDetails.module.css';
 import { useEffect, useState } from 'react';
+import request from '../../utils/request';
 
 export default function CarDetails(id) {
     const { carId } = useParams();
@@ -8,13 +9,7 @@ export default function CarDetails(id) {
     const totalDays = 0;
 
     useEffect(() => {
-        fetch(`https://mbqmgwqphsyquffalqrm.supabase.co/rest/v1/Cars?id=eq.${carId}`, {
-            method: 'GET',
-            headers: {
-                'apikey': import.meta.env.VITE_API_KEY,
-            }
-        })
-            .then(response => response.json())
+        request(import.meta.env.VITE_REST_URL,`/Cars?id=eq.${carId}`)
             .then(data => setCar(data[0]))
             .catch(error => console.error('Error fetching car data:', error));
 
