@@ -10,7 +10,7 @@ export default function Register({ onRegister }) {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        if (password.length < 6){
+        if (password.length > 6){
             alert("Паролата трябва да е повече от 6 символа!");
             return;
         }

@@ -1,13 +1,30 @@
 import { useNavigate } from "react-router";
 
-export default function CarCard({ id, carClass, imageURL, carModel, carGear, carGas, carSeats, carPrice, promoPrice, isAvailable }) {
+export default function CarCard({
+    id,
+    carClass,
+    imageURL,
+    carModel,
+    carGear,
+    carGas,
+    carSeats,
+    carPrice,
+    promoPrice,
+    isAvailable,
+    passedPickupDate,
+    passedReturnDate
+}) {
     const navigate = useNavigate();
 
     const hasPromo = promoPrice !== null && promoPrice !== undefined && promoPrice < carPrice;
 
     const carDetailsClickHandler = () => {
-        navigate(`cars/${id}`)
-
+        navigate(`cars/${id}`, {
+            state: {
+                initialPickupDate: passedPickupDate,
+                initialReturnDate: passedReturnDate
+            }
+        })
     };
 
     return (

@@ -11,6 +11,7 @@ export default async function request(url, path, method = 'GET', data = null) {
 
     if (data) {
         options.headers["Content-Type"] = "application/json";
+        options.headers["Prefer"] = "return=representation";
         options.body = JSON.stringify(data);
     }
 

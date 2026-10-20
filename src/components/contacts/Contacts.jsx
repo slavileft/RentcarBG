@@ -1,37 +1,27 @@
 import { useState } from 'react';
 
 import styles from './Contacts.module.css';
+import request from '../../utils/request';
 
 export default function Contacts() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [message, setMessage] = useState('');
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        fetch('https://mbqmgwqphsyquffalqrm.supabase.co/rest/v1/Contacts', {
-            headers: {
-                'apikey': import.meta.env.VITE_API_KEY,
-                'Authorization': `Bearer ${import.meta.env.VITE_API_KEY}`,
-                'Content-Type': 'application/json',
-                'Prefer': 'return=minimal'
-            },
-            method: 'POST',
-            body: JSON.stringify({ name: name, email: email, message: message })
-        })
-            .then(async response => {
-                if (!response.ok) {
-                    const errorData = await response.json();
-                    throw new Error(errorData.message || 'Failed to send message');
-                }
-                // Clear form only on success
-                setName('');
-                setEmail('');
-                setMessage('');
-                alert("Благодарим ви! Вашето съобщение беше изпратено успешно.");
-            })
-            .catch(error => console.error('Error submitting form:', error));
+        try {
+            await request(import.meta.env.VITE_REST_URL, "/Contacts", "POST", { name: name, email: email, message: message });
+
+            // Clear form only on success
+            setName('');
+            setEmail('');
+            setMessage('');
+            alert("Благодарим ви! Вашето съобщение беше изпратено успешно.");
+        } catch (error) {
+            alert(`Error submitting form:, ${error.message}`)
+        }
     };
 
     return (
