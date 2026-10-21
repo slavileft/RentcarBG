@@ -1,32 +1,31 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Booking from "../booking/Booking";
 import Catalog from "../catalog/Catalog";
 import request from "../../utils/request";
+import AuthContext from "../../context/auth-context";
 
 export default function Main() {
-    const [location, setLocation] = useState('');
-    const [pickupDate, setPickupDate] = useState('');
-    const [returnDate, setReturnDate] = useState('');
+    const { accessToken } = useContext(AuthContext);
+    const [bookingData, setBookingData] = useState({});
+
+    // console.log(bookingData.pickupLocation, bookingData.pickupDate, bookingData.returnDate);
+
     const [allBookings, setAllBookings] = useState([]);
 
     useEffect(() => {
-        request(import.meta.env.VITE_REST_URL, "/Reservations")
+        request(import.meta.env.VITE_REST_URL, "/Reservations", "GET", null, accessToken)
             .then(data => setAllBookings(data))
-            .catch(error => console.error('Error fetching bookings:', error));
+            .catch(error => alert(`Error fetching bookings:, ${error.message}`));
     }, []);
 
     return (
         <main className="main-content">
-            <Booking 
-                location={location} setLocation={setLocation}
-                pickupDate={pickupDate} setPickupDate={setPickupDate}
-                returnDate={returnDate} setReturnDate={setReturnDate}
-            />
+            <Booking setBookingData={setBookingData} />
 
-            <Catalog 
+            <Catalog
                 allBookings={allBookings}
-                searchPickupDate={pickupDate}
-                searchReturnDate={returnDate}
+                searchPickupDate={bookingData.pickupDate}
+                searchReturnDate={bookingData.returnDate}
             />
         </main>
     );

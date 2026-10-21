@@ -1,0 +1,230 @@
+/* Цветова палитра: ярко червено #d90429, бяло #ffffff, тъмносиво #2b2d42, светло сиво #8d99ae */
+
+.reservationsSection {
+    padding: 40px 20px;
+    min-height: 60vh;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.header h2 {
+    color: #2b2d42;
+    font-size: 2rem;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.header p {
+    color: #8d99ae;
+    font-size: 1rem;
+}
+
+.reservationsList {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.reservationCard {
+    display: flex;
+    background-color: #ffffff;
+    border: 1px solid #edf2f4;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(43, 45, 66, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.reservationCard:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(43, 45, 66, 0.1);
+}
+
+.imageWrapper {
+    width: 220px;
+    min-width: 220px;
+    background-color: #f8f9fa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    border-right: 1px solid #edf2f4;
+}
+
+.imageWrapper img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+.noImage {
+    color: #8d99ae;
+    font-size: 0.9rem;
+}
+
+.detailsContent {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.mainInfo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+}
+
+.mainInfo h3 {
+    color: #2b2d42;
+    font-size: 1.25rem;
+    margin: 0;
+}
+
+.badge {
+    background-color: #2b2d42;
+    color: #ffffff;
+    font-size: 0.75rem;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-weight: 600;
+}
+
+.specs {
+    display: flex;
+    gap: 15px;
+    color: #8d99ae;
+    font-size: 0.85rem;
+    margin-bottom: 15px;
+}
+
+.specs i {
+    color: #2b2d42;
+    margin-right: 4px;
+}
+
+.periodBox {
+    display: flex;
+    gap: 30px;
+    background-color: #f8f9fa;
+    padding: 12px 15px;
+    border-radius: 6px;
+    border-left: 3px solid #d90429;
+}
+
+.dateGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.dateLabel {
+    font-size: 0.75rem;
+    color: #8d99ae;
+    text-transform: uppercase;
+}
+
+.dateValue {
+    color: #2b2d42;
+    font-size: 0.95rem;
+}
+
+.dateValue i {
+    color: #d90429;
+    margin-right: 5px;
+}
+
+.priceSide {
+    width: 180px;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-left: 1px solid #edf2f4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.priceLabel {
+    font-size: 0.8rem;
+    color: #8d99ae;
+    text-transform: uppercase;
+}
+
+.priceValue {
+    color: #d90429;
+    font-size: 1.6rem;
+    font-weight: 700;
+}
+
+.statusBadge {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    font-size: 0.75rem;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Помощни състояния */
+.centerContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 40vh;
+}
+
+.loadingText {
+    color: #8d99ae;
+    font-size: 1.1rem;
+}
+
+.errorText {
+    color: #d90429;
+    font-weight: 600;
+}
+
+.emptyState {
+    text-align: center;
+    padding: 60px 0;
+    color: #8d99ae;
+    font-size: 1.1rem;
+}
+
+/* Адаптивност за мобилни устройства */
+@media (max-width: 768px) {
+    .reservationCard {
+        flex-direction: column;
+    }
+
+    .imageWrapper {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #edf2f4;
+        padding: 20px;
+    }
+
+    .imageWrapper img {
+        max-height: 150px;
+    }
+
+    .priceSide {
+        width: 100%;
+        border-left: none;
+        border-top: 1px solid #edf2f4;
+        padding: 15px;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}

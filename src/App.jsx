@@ -14,6 +14,7 @@ import About from "./components/about/About.jsx";
 import Login from "./components/login/Login.jsx";
 import Register from "./components/register/Register.jsx";
 import { authApi } from "./api"
+import AuthContext from "./context/auth-context.js";
 
 
 function App() {
@@ -44,8 +45,16 @@ function App() {
         }
     };
 
+    const contextValue = {
+        accessToken: auth?.access_token,
+        user: auth?.user,
+        isAuthenticated: !!auth,
+        registerHandler,
+        loginHandler,
+    }
+
     return (
-        <>
+        <AuthContext.Provider value={contextValue}>
             <Header user={auth?.user} />
 
             <Routes>
@@ -62,7 +71,7 @@ function App() {
 
             <Footer />
 
-        </>
+        </AuthContext.Provider>
     )
 }
 

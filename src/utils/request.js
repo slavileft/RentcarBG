@@ -1,4 +1,4 @@
-export default async function request(url, path, method = 'GET', data = null) {
+export default async function request(url, path, method = 'GET', data = null, token=null) {
     const options = {
         headers: {
             'apikey': import.meta.env.VITE_API_KEY,
@@ -7,6 +7,10 @@ export default async function request(url, path, method = 'GET', data = null) {
 
     if (method != 'GET') {
         options.method = method;
+    }
+
+    if (token) {
+        options.headers['Authorization'] = `Bearer ${token}`;
     }
 
     if (data) {

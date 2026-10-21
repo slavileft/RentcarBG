@@ -1,18 +1,20 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
 import SearchFilter from "../search-filter/SearchFilter";
 import CarCard from "./../car-card/CarCard";
 import request from "../../utils/request";
+import AuthContext from "../../context/auth-context";
 
 export default function Catalog({ allBookings, searchPickupDate, searchReturnDate }) {
+    const {accessToken} = useContext(AuthContext);
     const [selectedClass, setSelectedClass] = useState('');
     const [selectedGear, setSelectedGear] = useState('');
     const [cars, setCars] = useState([]);
 
     useEffect(() => {
-        request(import.meta.env.VITE_REST_URL, "/Cars")
+        request(import.meta.env.VITE_REST_URL, "/Cars", "GET", null, accessToken)
             .then(data => setCars(data))
-            .catch(error => console.error('Error fetching car data:', error));
-    }, []);
+            .catch(error => alert(`Error fetching car data:, ${error.message}`));
+    }, [accessToken]);
 
     const filteredCars = cars.filter(car => {
         const matchesClass = selectedClass === '' || car.carClass === selectedClass;
@@ -40,11 +42,18 @@ export default function Catalog({ allBookings, searchPickupDate, searchReturnDat
 
     return (
         <section className="catalog-section container">
-            <div className="section-title">
-                <h2>Нашият Автопарк</h2>
-                <p>Изберете перфектния автомобил за вашето пътуване</p>
-            </div>
-
+            {searchPickupDate ? (
+                <div className="section-title">
+                    <h2>Всички намерени автомобили</h2>
+                    <p>за периода от {searchPickupDate} до {searchReturnDate}</p>
+                </div>
+            ) : (
+                <div className="section-title">
+                    <h2>Нашият Автопарк</h2>
+                    <p>Изберете перфектния автомобил за вашето пътуване</p>
+                </div>
+            )}
+            
             <SearchFilter
                 selectedClass={selectedClass}
                 setSelectedClass={setSelectedClass}

@@ -1,13 +1,32 @@
-export default function Booking({ 
-    location, setLocation, 
-    pickupDate, setPickupDate, 
-    returnDate, setReturnDate 
-}) {
-    const searchSubmitHandler = (e) => {
-        e.preventDefault();
+export default function Booking({ setBookingData }) {
+    
+    const searchActionHandler = (formData) => {
+        const pickupLocation = formData.get("pickupLocation");
+        const pickupDate = formData.get("pickupDate");
+        const returnDate = formData.get("returnDate");
+
+        if (!pickupLocation) {
+            alert("Моля, изберете локация!");
+            return;
+        }
+
+        if (!pickupDate) {
+            alert("Моля, изберете дата на наемане!");
+            return;
+        }
+
+        if (!returnDate) {
+            alert("Моля, изберете дата на връщане!");
+            return;
+        }
+
         if (pickupDate && returnDate && new Date(pickupDate) > new Date(returnDate)) {
             alert("Датата на връщане не може да бъде преди датата на вземане!");
+            return;
         }
+
+        setBookingData({ pickupLocation, pickupDate, returnDate });
+
     };
 
     return (
@@ -15,10 +34,10 @@ export default function Booking({
             <div className="container">
                 <div className="search-box">
                     <h3>Направи резервация</h3>
-                    <form className="search-form" onSubmit={searchSubmitHandler}>
+                    <form className="search-form" action={searchActionHandler}>
                         <div className="form-group">
                             <label><i className="fa-solid fa-location-dot"></i> Място на наемане</label>
-                            <select value={location} onChange={(e) => setLocation(e.target.value)}>
+                            <select name="pickupLocation">
                                 <option value="">Изберете локация...</option>
                                 <option value="Летище София Т1">Летище София Т1</option>
                                 <option value="Летище София Т2">Летище София Т2</option>
@@ -27,19 +46,11 @@ export default function Booking({
                         </div>
                         <div className="form-group">
                             <label><i className="fa-solid fa-calendar-days"></i> Дата на наемане</label>
-                            <input 
-                                type="date" 
-                                value={pickupDate} 
-                                onChange={(e) => setPickupDate(e.target.value)} 
-                            />
+                            <input type="date" name="pickupDate" />
                         </div>
                         <div className="form-group">
                             <label><i className="fa-solid fa-calendar-days"></i> Дата на връщане</label>
-                            <input 
-                                type="date" 
-                                value={returnDate} 
-                                onChange={(e) => setReturnDate(e.target.value)} 
-                            />
+                            <input type="date" name="returnDate" />
                         </div>
                         <button type="submit" className="btn-accent">Търсене</button>
                     </form>

@@ -19,7 +19,7 @@ export default function CarCard({
     const hasPromo = promoPrice !== null && promoPrice !== undefined && promoPrice < carPrice;
 
     const carDetailsClickHandler = () => {
-        navigate(`cars/${id}`, {
+        navigate(`/cars/${id}`, {
             state: {
                 initialPickupDate: passedPickupDate,
                 initialReturnDate: passedReturnDate

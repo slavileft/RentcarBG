@@ -1,7 +1,7 @@
 import { NavLink, Link } from "react-router";
 
 export default function Header({ user }) {
-    
+
     return (
         <header className="main-header">
             <div className="container header-flex">
@@ -18,7 +18,10 @@ export default function Header({ user }) {
                 </nav>
                 <div className="auth-buttons">
                     {user ? (
-                        <p>{user.email}</p>
+                        <>
+                            <Link to="/reservations" className="btn-link">{user.email}</Link>
+                            <Link to="#" className="btn-primary">Изход</Link>
+                        </>
                     ) : (
                         <>
                             <Link to="/login" className="btn-link">Вход</Link>

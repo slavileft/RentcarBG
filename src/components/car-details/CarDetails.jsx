@@ -1,11 +1,14 @@
-import { useParams } from 'react-router';
-import { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router';
+import { useContext, useEffect, useState } from 'react';
 import { useLocation } from 'react-router';
 
 import styles from './CarDetails.module.css';
 import request from '../../utils/request';
+import AuthContext from '../../context/auth-context';
 
 export default function CarDetails() {
+    const {accessToken, user} = useContext(AuthContext);
+    const navigate = useNavigate();
     const routerLocation = useLocation();
     const routerState = routerLocation.state || {};
 
@@ -24,12 +27,12 @@ export default function CarDetails() {
         // Взимаме данните за автомобила
         request(import.meta.env.VITE_REST_URL, `/Cars?id=eq.${carId}`)
             .then(data => setCar(data[0]))
-            .catch(error => console.error('Error fetching car data:', error));
+            .catch(error => alert(`Error fetching car data:, ${error.message}`));
 
         // Взимаме съществуващите резервации от Supabase за тази конкретна кола
         request(import.meta.env.VITE_REST_URL, `/Reservations?carId=eq.${carId}`)
             .then(data => setExistingBookings(data))
-            .catch(error => console.error('Error fetching bookings:', error));
+            .catch(error => alert(`Error fetching bookings:, ${error.message}`));
     }, [carId]);
 
     // 2. Логика за изчисляване на дни, цена и проверка за застъпване (Overlap)
@@ -41,7 +44,7 @@ export default function CarDetails() {
             const end = new Date(returnDate);
 
             const differenceInTime = end.getTime() - start.getTime();
-            const differenceInDays = Math.ceil(differenceInTime / (1000 * 3600 * 24));
+            const differenceInDays = Math.ceil(differenceInTime / (1000 * 3600 * 24)) + 1;
 
             if (differenceInDays > 0) {
                 setTotalDays(differenceInDays);
@@ -56,11 +59,11 @@ export default function CarDetails() {
                 // ПРОВЕРКА ЗА ЗАСТЪПВАНЕ НА ДАТИТЕ (Overlap проверка)
                 let taken = false;
                 for (let booking of existingBookings) {
-                    const bStart = new Date(booking.startDate);
-                    const bEnd = new Date(booking.endDate);
+                    const bookingStart = new Date(booking.startDate);
+                    const bookingEnd = new Date(booking.endDate);
 
                     // Математическа формула за припокриване на периоди
-                    if (start <= bEnd && end >= bStart) {
+                    if (start <= bookingEnd && end >= bookingStart) {
                         taken = true;
                         break;
                     }
@@ -75,8 +78,7 @@ export default function CarDetails() {
         }
     }, [pickupDate, returnDate, car, existingBookings]);
 
-    // 3. Обработка на изпращането на формата (CRUD - Create)
-    const handleBookingSubmit = (e) => {
+    const bookingSubmitHandler = async (e) => {
         e.preventDefault();
         if (totalDays <= 0) {
             alert("Моля, изберете валиден период от време!");
@@ -87,22 +89,27 @@ export default function CarDetails() {
             return;
         }
 
-        // Обектът, който ще изпратиш към Supabase (/Bookings)
         const bookingData = {
             carId: carId,
             startDate: pickupDate,
             endDate: returnDate,
-            totalPrice: totalPrice
-            // По-късно тук ще добавим и userId от AuthContext
+            totalPrice: totalPrice,
+            userId: user?.id
         };
 
         console.log("Изпращане на нова резервация към Supabase:", bookingData);
-        // Тук ще извършиш съответната POST заявка с request утилита ти
+        try{
+            await request(import.meta.env.VITE_REST_URL,"/Reservations", "POST", bookingData);
+            if (accessToken) {
+                navigate("/reservations");
+            }
+        } catch (error) {
+            alert(`Error submitting form:, ${error.message}`)
+        }   
     };
 
     if (!car) return <p className={styles.loading}>Зареждане на детайли...</p>;
 
-    // Проверка дали колата има активна промо цена
     const hasPromo = car.promoPrice !== null && car.promoPrice !== undefined;
 
     return (
@@ -142,7 +149,7 @@ export default function CarDetails() {
                     <div className={styles.bookingBox}>
                         <h3>Резервация на автомобила</h3>
 
-                        <form onSubmit={handleBookingSubmit} className={styles.bookingForm}>
+                        <form onSubmit={bookingSubmitHandler} className={styles.bookingForm}>
 
                             <div className={styles.formGroup}>
                                 <label><i className="fa-solid fa-calendar-days"></i> Дата на вземане</label>

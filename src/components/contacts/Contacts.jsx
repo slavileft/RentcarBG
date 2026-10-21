@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 
 import styles from './Contacts.module.css';
 import request from '../../utils/request';
+import AuthContext from '../../context/auth-context';
 
 export default function Contacts() {
+    const {accessToken} = useContext(AuthContext)
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [message, setMessage] = useState('');
@@ -12,7 +14,7 @@ export default function Contacts() {
         e.preventDefault();
 
         try {
-            await request(import.meta.env.VITE_REST_URL, "/Contacts", "POST", { name: name, email: email, message: message });
+            await request(import.meta.env.VITE_REST_URL, "/Contacts", "POST", { name: name, email: email, message: message }, accessToken);
 
             // Clear form only on success
             setName('');
