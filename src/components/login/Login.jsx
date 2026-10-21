@@ -1,8 +1,10 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Link } from 'react-router';
 import styles from './Login.module.css';
+import AuthContext from '../../context/auth-context';
 
-export default function Login({ onLogin }) {
+export default function Login() {
+    const {onLogin} = useContext(AuthContext)
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 

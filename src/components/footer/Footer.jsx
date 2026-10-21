@@ -8,8 +8,8 @@ export default function Footer() {
                     <h4>RENTCAR<span>.bg</span></h4>
                     <p>Модерни и сигурни автомобили под наем. Коректност и прозрачни условия без скрити такси.</p>
                     <div className="social-icons">
-                        <a href="#"><i className="fa-brands fa-facebook"></i></a>
-                        <a href="#"><i className="fa-brands fa-linkedin"></i></a>
+                        <a href="https://www.facebook.com/rentcar.bg"><i className="fa-brands fa-facebook"></i></a>
+                        <a href="https://www.linkedin.com/company/rentcar.bg/home/"><i className="fa-brands fa-linkedin"></i></a>
                     </div>
                 </div>
                 <div className="footer-links">

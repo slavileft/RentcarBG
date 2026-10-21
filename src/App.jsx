@@ -1,6 +1,6 @@
 import { Routes, Route, useNavigate } from "react-router"
 
-import usePersistedState from "./hooks/usePersistedState.js";
+import { AuthProvider } from "./context/auth-context.js";
 
 import Header from "./components/header/Header.jsx"
 import Main from "./components/main/Main.jsx"
@@ -13,61 +13,13 @@ import MyReservations from "./components/my-reservations/MyReservations.jsx";
 import About from "./components/about/About.jsx";
 import Login from "./components/login/Login.jsx";
 import Register from "./components/register/Register.jsx";
-import { authApi } from "./api"
-import AuthContext from "./context/auth-context.js";
 import Logout from "./components/logout/Logout.jsx";
 
-
 function App() {
-    const navigate = useNavigate();
-    const [auth, setAuth] = usePersistedState('auth',null);
-
-    const registerHandler = async (userData) => {
-        try {
-            const result = await authApi.register(userData);
-
-            setAuth(result);
-
-            navigate("/");
-        } catch (error) {
-            alert(error.message);
-        }
-    };
-
-    const loginHandler = async (userData) => {
-        try {
-            const result = await authApi.login(userData);
-
-            setAuth(result);
-
-            navigate("/");
-        } catch (error) {
-            alert(error.message);
-        }
-    };
-
-    const logoutHandler = async () => {
-        try{
-            await authApi.logout(auth?.access_token);
-
-            setAuth(null);
-        } catch (error) {
-            alert(error.message);
-        }
-    }
-
-    const contextValue = {
-        accessToken: auth?.access_token,
-        user: auth?.user,
-        isAuthenticated: !!auth,
-        registerHandler,
-        loginHandler,
-        logout: logoutHandler,
-    }
 
     return (
-        <AuthContext.Provider value={contextValue}>
-            <Header user={auth?.user} />
+        <AuthProvider>
+            <Header />
 
             <Routes>
                 <Route path="/" element={<Main />} />
@@ -77,14 +29,14 @@ function App() {
                 <Route path="/contacts" element={<Contacts />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/reservations" element={<MyReservations />} />
-                <Route path="/login" element={<Login onLogin={loginHandler} />} />
-                <Route path="/register" element={<Register onRegister={registerHandler} />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
                 <Route path="/logout" element={<Logout />} />
             </Routes>
 
             <Footer />
 
-        </AuthContext.Provider>
+        </AuthProvider>
     )
 }
 
