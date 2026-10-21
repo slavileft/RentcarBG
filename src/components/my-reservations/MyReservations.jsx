@@ -5,7 +5,7 @@ import request from '../../utils/request.js';
 import AuthContext from '../../context/auth-context';
 
 export default function MyReservations({ userId }) {
-    const {accessToken, user} = useContext(AuthContext);
+    const { accessToken, user } = useContext(AuthContext);
     const [reservations, setReservations] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -21,7 +21,7 @@ export default function MyReservations({ userId }) {
                 setIsLoading(true);
                 // 1. Вземаме резервациите само за текущия потребител
                 const bookingsData = await request(
-                    import.meta.env.VITE_REST_URL, 
+                    import.meta.env.VITE_REST_URL,
                     `/Reservations?userId=eq.${user.id}`,
                     "GET",
                     null,
@@ -54,7 +54,7 @@ export default function MyReservations({ userId }) {
 
                 // Сортираме резервациите по начална дата (от най-новите към по-старите)
                 combinedData.sort((a, b) => new Date(b.startDate) - new Date(a.startDate));
-                
+
                 setReservations(combinedData);
             } catch (error) {
                 alert(`Error fetching reservations:, ${error.message}`);
@@ -66,6 +66,29 @@ export default function MyReservations({ userId }) {
 
         fetchUserReservations();
     }, [user.id]);
+
+    // Функция за изтриване на резервация
+    const deleteBookingHandler = async (bookingId) => {
+        const isConfirmed = window.confirm("Сигурни ли сте, че искате да анулирате тази резервация?");
+        if (!isConfirmed) return;
+
+        try {
+            // Изпращаме DELETE заявка с нужните хедъри за аутентификация
+            await request(
+                import.meta.env.VITE_REST_URL,
+                `/Reservations?id=eq.${bookingId}`,
+                "DELETE",
+                null,
+                accessToken
+            );
+
+            // Обновяваме UI състоянието филтрирайки изтрития запис
+            setReservations(prev => prev.filter(b => b.id !== bookingId));
+        } catch (err) {
+            console.error('Error deleting booking:', err);
+            alert('Неуспешно анулиране. Моля, опитайте отново.');
+        }
+    };
 
     if (isLoading) {
         return (
@@ -133,6 +156,15 @@ export default function MyReservations({ userId }) {
                                 <span className={styles.priceLabel}>Обща сума</span>
                                 <span className={styles.priceValue}>€{booking.totalPrice}</span>
                                 <span className={styles.statusBadge}>Потвърдена</span>
+
+                                {/* Нов бутон за изтриване */}
+                                <button
+                                    onClick={() => deleteBookingHandler(booking.id)}
+                                    className={styles.btnDelete}
+                                    title="Анулирай резервацията"
+                                >
+                                    <i className="fa-solid fa-trash-can"></i> Анулирай
+                                </button>
                             </div>
                         </article>
                     ))}

@@ -9,6 +9,10 @@ export default async function request(url, path, method = 'GET', data = null, to
         options.method = method;
     }
 
+    if (method === 'DELETE'){
+        options.headers["Prefer"] = "return=representation";
+    }
+
     if (token) {
         options.headers['Authorization'] = `Bearer ${token}`;
     }

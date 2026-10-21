@@ -228,3 +228,44 @@
         justify-content: space-between;
     }
 }
+.btnDelete {
+    margin-top: 12px;
+    background-color: transparent;
+    color: #8d99ae;
+    border: 1px solid #edf2f4;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s ease;
+    width: 100%;
+    justify-content: center;
+}
+
+.btnDelete i {
+    font-size: 0.85rem;
+}
+
+.btnDelete:hover {
+    background-color: #d90429;
+    color: #ffffff;
+    border-color: #d90429;
+    box-shadow: 0 2px 4px rgba(217, 4, 41, 0.2);
+}
+
+/* Обновяване на мобилната адаптивност */
+@media (max-width: 768px) {
+    .priceSide {
+        flex-direction: column; /* Запазваме подредбата на мобилни */
+        align-items: center;
+    }
+    
+    .btnDelete {
+        width: auto;
+        padding: 8px 20px;
+    }
+}
