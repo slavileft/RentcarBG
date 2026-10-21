@@ -1,5 +1,6 @@
 export default function Booking({ setBookingData }) {
-    
+    const today = new Date().toISOString().split('T')[0];
+
     const searchActionHandler = (formData) => {
         const pickupLocation = formData.get("pickupLocation");
         const pickupDate = formData.get("pickupDate");
@@ -46,11 +47,11 @@ export default function Booking({ setBookingData }) {
                         </div>
                         <div className="form-group">
                             <label><i className="fa-solid fa-calendar-days"></i> Дата на наемане</label>
-                            <input type="date" name="pickupDate" />
+                            <input type="date" name="pickupDate" min={today} />
                         </div>
                         <div className="form-group">
                             <label><i className="fa-solid fa-calendar-days"></i> Дата на връщане</label>
-                            <input type="date" name="returnDate" />
+                            <input type="date" name="returnDate" min={today}/>
                         </div>
                         <button type="submit" className="btn-accent">Търсене</button>
                     </form>
