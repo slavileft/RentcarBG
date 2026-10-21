@@ -20,7 +20,7 @@ export default function Header({ user }) {
                     {user ? (
                         <>
                             <Link to="/reservations" className="btn-link">{user.email}</Link>
-                            <Link to="#" className="btn-primary">Изход</Link>
+                            <Link to="/logout" className="btn-primary">Изход</Link>
                         </>
                     ) : (
                         <>

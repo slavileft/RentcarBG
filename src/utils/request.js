@@ -7,10 +7,10 @@ export default async function request(url, path, method = 'GET', data = null, to
 
     if (method != 'GET') {
         options.method = method;
+        options.headers["Prefer"] = "return=representation";
     }
 
     if (method === 'DELETE'){
-        options.headers["Prefer"] = "return=representation";
     }
 
     if (token) {
@@ -19,7 +19,6 @@ export default async function request(url, path, method = 'GET', data = null, to
 
     if (data) {
         options.headers["Content-Type"] = "application/json";
-        options.headers["Prefer"] = "return=representation";
         options.body = JSON.stringify(data);
     }
 
@@ -27,6 +26,10 @@ export default async function request(url, path, method = 'GET', data = null, to
 
     if (!response.ok) {
         throw new Error(`HTML error! status: ${response.status}`);
+    }
+
+    if (response.status === 204) {
+        return null;
     }
 
     return response.json();

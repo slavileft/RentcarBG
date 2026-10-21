@@ -15,6 +15,7 @@ import Login from "./components/login/Login.jsx";
 import Register from "./components/register/Register.jsx";
 import { authApi } from "./api"
 import AuthContext from "./context/auth-context.js";
+import Logout from "./components/logout/Logout.jsx";
 
 
 function App() {
@@ -45,12 +46,23 @@ function App() {
         }
     };
 
+    const logoutHandler = async () => {
+        try{
+            await authApi.logout(auth?.access_token);
+
+            setAuth(null);
+        } catch (error) {
+            alert(error.message);
+        }
+    }
+
     const contextValue = {
         accessToken: auth?.access_token,
         user: auth?.user,
         isAuthenticated: !!auth,
         registerHandler,
         loginHandler,
+        logout: logoutHandler,
     }
 
     return (
@@ -67,6 +79,7 @@ function App() {
                 <Route path="/reservations" element={<MyReservations />} />
                 <Route path="/login" element={<Login onLogin={loginHandler} />} />
                 <Route path="/register" element={<Register onRegister={registerHandler} />} />
+                <Route path="/logout" element={<Logout />} />
             </Routes>
 
             <Footer />
