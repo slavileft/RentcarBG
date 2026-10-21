@@ -1,14 +1,19 @@
-<<<<<<< HEAD
-# Rent-a-Car React Application Rentcar.BG
-
-## How to start the project localy:
-1. Clone the repository.
-2. Execute `npm install` in terminal.
-3. Start with `npm run dev`.
-
-## Link to Deployment:
-(Will be added after deployment)
-=======
 # RentcarBG
-This is a REACT single page application for a rent a car company.
->>>>>>> c9e8bebf5be5be075049625517b7164cdde0627d
+
+A React single-page application for the car rental company rentcar.bg.
+Browse the fleet, check availability for chosen dates, make and manage reservations.
+
+## Live demo
+(link will be added after deployment)
+
+## Tech stack
+React 19, React Router 8, Vite, Supabase (database + authentication)
+
+## Getting started
+1. Clone the repository
+2. Run `npm install`
+3. Copy `.env.example` to `.env.local` and fill in your Supabase values
+4. Run `npm run dev`
+
+## Functional Guide
+(to be added)

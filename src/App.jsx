@@ -1,6 +1,6 @@
 import { Routes, Route, useNavigate } from "react-router"
 
-import { useState } from "react";
+import usePersistedState from "./hooks/usePersistedState.js";
 
 import Header from "./components/header/Header.jsx"
 import Main from "./components/main/Main.jsx"
@@ -20,7 +20,7 @@ import Logout from "./components/logout/Logout.jsx";
 
 function App() {
     const navigate = useNavigate();
-    const [auth, setAuth] = useState(null);
+    const [auth, setAuth] = usePersistedState('auth',null);
 
     const registerHandler = async (userData) => {
         try {
