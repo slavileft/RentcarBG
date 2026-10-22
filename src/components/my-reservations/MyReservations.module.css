@@ -143,15 +143,22 @@
 }
 
 .priceSide {
-    width: 180px;
+    width: 240px;
     padding: 20px;
     background-color: #f8f9fa;
     border-left: 1px solid #edf2f4;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    gap: 6px;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.priceContainer {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
 }
 
 .priceLabel {
@@ -202,38 +209,16 @@
     font-size: 1.1rem;
 }
 
-/* Адаптивност за мобилни устройства */
-@media (max-width: 768px) {
-    .reservationCard {
-        flex-direction: column;
-    }
-
-    .imageWrapper {
-        width: 100%;
-        border-right: none;
-        border-bottom: 1px solid #edf2f4;
-        padding: 20px;
-    }
-
-    .imageWrapper img {
-        max-height: 150px;
-    }
-
-    .priceSide {
-        width: 100%;
-        border-left: none;
-        border-top: 1px solid #edf2f4;
-        padding: 15px;
-        flex-direction: row;
-        justify-content: space-between;
-    }
+/* Екшън бутони */
+.actionButtons {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
-.btnDelete {
-    margin-top: 12px;
-    background-color: transparent;
-    color: #8d99ae;
-    border: 1px solid #edf2f4;
-    padding: 6px 12px;
+
+.btnEdit, .btnSave, .btnCancel, .btnDelete {
+    padding: 8px 12px;
     border-radius: 4px;
     font-size: 0.8rem;
     font-weight: 600;
@@ -241,13 +226,25 @@
     display: flex;
     align-items: center;
     gap: 6px;
+    justify-content: center;
     transition: all 0.2s ease;
     width: 100%;
-    justify-content: center;
 }
 
-.btnDelete i {
-    font-size: 0.85rem;
+.btnEdit {
+    background-color: #2b2d42;
+    color: #ffffff;
+    border: none;
+}
+
+.btnEdit:hover {
+    background-color: #1d1f2f;
+}
+
+.btnDelete {
+    background-color: transparent;
+    color: #8d99ae;
+    border: 1px solid #edf2f4;
 }
 
 .btnDelete:hover {
@@ -257,15 +254,102 @@
     box-shadow: 0 2px 4px rgba(217, 4, 41, 0.2);
 }
 
-/* Обновяване на мобилната адаптивност */
+.btnSave {
+    background-color: #2e7d32;
+    color: #ffffff;
+    border: none;
+}
+
+.btnSave:hover {
+    background-color: #1b5e20;
+}
+
+.btnCancel {
+    background-color: transparent;
+    color: #8d99ae;
+    border: 1px solid #edf2f4;
+}
+
+.btnCancel:hover {
+    background-color: #edf2f4;
+    color: #2b2d42;
+}
+
+/* Стилизация за инлайн контейнера с датите при редактиране */
+.editPeriodBox {
+    display: flex;
+    gap: 15px;
+    background-color: #fff5f5; 
+    padding: 12px 15px;
+    border-radius: 6px;
+    border-left: 3px solid #d90429;
+}
+
+.inputGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+}
+
+.inputGroup label {
+    font-size: 0.75rem;
+    color: #2b2d42;
+    font-weight: 600;
+}
+
+.inputGroup input {
+    padding: 6px 10px;
+    border: 1px solid #edf2f4;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    color: #2b2d42;
+    background-color: #ffffff;
+    width: 100%;
+}
+
+.inputGroup input:focus {
+    outline: none;
+    border-color: #d90429;
+}
+
+/* Адаптивност за мобилни устройства */
 @media (max-width: 768px) {
+    .reservationCard {
+        flex-direction: column;
+    }
+
+    .imageWrapper {
+        width: 100%;
+        min-width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #edf2f4;
+        padding: 20px;
+    }
+
+    .imageWrapper img {
+        max-height: 150px;
+    }
+
+    .detailsContent {
+        gap: 20px;
+    }
+
     .priceSide {
-        flex-direction: column; /* Запазваме подредбата на мобилни */
-        align-items: center;
+        width: 100%;
+        border-left: none;
+        border-top: 1px solid #edf2f4;
+        padding: 20px;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .actionButtons {
+        flex-direction: row;
+        gap: 10px;
     }
     
-    .btnDelete {
-        width: auto;
-        padding: 8px 20px;
+    .actionButtons button {
+        flex: 1;
     }
 }

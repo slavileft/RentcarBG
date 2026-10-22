@@ -10,6 +10,10 @@ export default function MyReservations({ userId }) {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
 
+    const [editingBookingId, setEditingBookingId] = useState(null);
+    const [editPickupDate, setEditPickupDate] = useState('');
+    const [editReturnDate, setEditReturnDate] = useState('');
+
     useEffect(() => {
         if (!user.id) {
             setIsLoading(false);
@@ -98,6 +102,57 @@ export default function MyReservations({ userId }) {
         );
     }
 
+    // 1. Влизане в режим на редактиране и попълване на текущите дати
+    const startEditHandler = (booking) => {
+        setEditingBookingId(booking.id);
+        setEditPickupDate(booking.startDate);
+        setEditReturnDate(booking.endDate);
+    };
+
+    // 2. Отказ от редактиране
+    const cancelEditHandler = () => {
+        setEditingBookingId(null);
+    };
+
+    // 3. Запазване на промените (PATCH заявка)
+    const saveEditHandler = async (booking) => {
+        if (new Date(editPickupDate) > new Date(editReturnDate)) {
+            alert("Датата на връщане не може да бъде преди давата на вземане!");
+            return;
+        }
+
+        const start = new Date(editPickupDate);
+        const end = new Date(editReturnDate);
+        const differenceInTime = end.getTime() - start.getTime();
+        const totalDays = Math.ceil(differenceInTime / (1000 * 3600 * 24)) + 1;
+
+        if (totalDays <= 0) {
+            alert("Минималният период за наем е 1 ден.");
+            return;
+        }
+
+        // Преизчисляваме общата цена спрямо новия период
+        const activePrice = (booking.car.promoPrice !== null && booking.car.promoPrice !== undefined)
+            ? booking.car.promoPrice
+            : booking.car.carPrice;
+        const newTotalPrice = totalDays * activePrice;
+
+        try {
+            await request(import.meta.env.VITE_REST_URL, `/Reservations?id=eq.${booking.id}`, "PATCH", { startDate: editPickupDate, endDate: editReturnDate, totalPrice: newTotalPrice }, accessToken);
+
+            // Актуализираме UI състоянието на колата локално
+            setReservations(prev => prev.map(b => b.id === booking.id
+                ? { ...b, startDate: editPickupDate, endDate: editReturnDate, totalPrice: newTotalPrice }
+                : b
+            ));
+            setEditingBookingId(null);
+        } catch (err) {
+            console.error('Error updating booking:', err);
+            alert('Неуспешна промяна. Моля, опитайте отново.');
+        }
+    };
+
+
     if (error) {
         return (
             <div className={styles.centerContainer}>
@@ -115,59 +170,115 @@ export default function MyReservations({ userId }) {
 
             {reservations.length > 0 ? (
                 <div className={styles.reservationsList}>
-                    {reservations.map((booking) => (
-                        <article key={booking.id} className={styles.reservationCard}>
-                            <div className={styles.imageWrapper}>
-                                {booking.car.imageURL ? (
-                                    <img src={booking.car.imageURL} alt={booking.car.carModel} />
-                                ) : (
-                                    <div className={styles.noImage}>Няма снимка</div>
-                                )}
-                            </div>
+                    {reservations.map((booking) => {
+                        const isEditing = editingBookingId === booking.id;
+                        return (
+                            <article key={booking.id} className={styles.reservationCard}>
 
-                            <div className={styles.detailsContent}>
-                                <div className={styles.mainInfo}>
-                                    <h3>{booking.car.carModel}</h3>
-                                    <span className={styles.badge}>{booking.car.carClass}</span>
+                                {/* КОЛОНА 1: Снимка */}
+                                <div className={styles.imageWrapper}>
+                                    {booking.car.imageURL ? (
+                                        <img src={booking.car.imageURL} alt={booking.car.carModel} />
+                                    ) : (
+                                        <div className={styles.noImage}>Няма снимка</div>
+                                    )}
                                 </div>
 
-                                <div className={styles.specs}>
-                                    <span><i className="fa-solid fa-gears"></i> {booking.car.carGear}</span>
-                                    <span><i className="fa-solid fa-gas-pump"></i> {booking.car.carGas}</span>
-                                </div>
+                                {/* КОЛОНА 2: Основна информация и Дати */}
+                                <div className={styles.detailsContent}>
+                                    <div>
+                                        <div className={styles.mainInfo}>
+                                            <h3>{booking.car.carModel}</h3>
+                                            <span className={styles.badge}>{booking.car.carClass}</span>
+                                        </div>
 
-                                <div className={styles.periodBox}>
-                                    <div className={styles.dateGroup}>
-                                        <span className={styles.dateLabel}>Вземане:</span>
-                                        <strong className={styles.dateValue}>
-                                            <i className="fa-solid fa-calendar-days"></i> {booking.startDate}
-                                        </strong>
+                                        <div className={styles.specs}>
+                                            <span><i className="fa-solid fa-gears"></i> {booking.car.carGear}</span>
+                                            <span><i className="fa-solid fa-gas-pump"></i> {booking.car.carGas}</span>
+                                        </div>
                                     </div>
-                                    <div className={styles.dateGroup}>
-                                        <span className={styles.dateLabel}>Връщане:</span>
-                                        <strong className={styles.dateValue}>
-                                            <i className="fa-solid fa-calendar-days"></i> {booking.endDate}
-                                        </strong>
-                                    </div>
+
+                                    {/* Превключване между преглед и редактиране на датите */}
+                                    {!isEditing ? (
+                                        <div className={styles.periodBox}>
+                                            <div className={styles.dateGroup}>
+                                                <span className={styles.dateLabel}>Вземане:</span>
+                                                <strong className={styles.dateValue}>
+                                                    <i className="fa-solid fa-calendar-days"></i> {booking.startDate}
+                                                </strong>
+                                            </div>
+                                            <div className={styles.dateGroup}>
+                                                <span className={styles.dateLabel}>Връщане:</span>
+                                                <strong className={styles.dateValue}>
+                                                    <i className="fa-solid fa-calendar-days"></i> {booking.endDate}
+                                                </strong>
+                                            </div>
+                                        </div>
+                                    ) : (
+                                        <div className={styles.editPeriodBox}>
+                                            <div className={styles.inputGroup}>
+                                                <label>Нова дата на вземане:</label>
+                                                <input
+                                                    type="date"
+                                                    value={editPickupDate}
+                                                    onChange={(e) => setEditPickupDate(e.target.value)}
+                                                />
+                                            </div>
+                                            <div className={styles.inputGroup}>
+                                                <label>Нова дата на връщане:</label>
+                                                <input
+                                                    type="date"
+                                                    value={editReturnDate}
+                                                    onChange={(e) => setEditReturnDate(e.target.value)}
+                                                />
+                                            </div>
+                                        </div>
+                                    )}
                                 </div>
-                            </div>
 
-                            <div className={styles.priceSide}>
-                                <span className={styles.priceLabel}>Обща сума</span>
-                                <span className={styles.priceValue}>€{booking.totalPrice}</span>
-                                <span className={styles.statusBadge}>Потвърдена</span>
+                                {/* КОЛОНА 3: Страничен блок за Цена и Бутони */}
+                                <div className={styles.priceSide}>
+                                    <div className={styles.priceContainer}>
+                                        <span className={styles.priceLabel}>Обща сума:</span>
+                                        <span className={styles.priceValue}>{booking.totalPrice} €</span>
+                                    </div>
 
-                                {/* Нов бутон за изтриване */}
-                                <button
-                                    onClick={() => deleteBookingHandler(booking.id)}
-                                    className={styles.btnDelete}
-                                    title="Анулирай резервацията"
-                                >
-                                    <i className="fa-solid fa-trash-can"></i> Анулирай
-                                </button>
-                            </div>
-                        </article>
-                    ))}
+                                    {!isEditing ? (
+                                        <div className={styles.actionButtons}>
+                                            <button
+                                                onClick={() => startEditHandler(booking)}
+                                                className={styles.btnEdit}
+                                            >
+                                                <i className="fa-solid fa-pen-to-square"></i> Промени
+                                            </button>
+                                            <button
+                                                onClick={() => deleteBookingHandler(booking.id)}
+                                                className={styles.btnDelete}
+                                            >
+                                                <i className="fa-solid fa-trash-can"></i> Анулирай
+                                            </button>
+                                        </div>
+                                    ) : (
+                                        <div className={styles.actionButtons}>
+                                            <button
+                                                onClick={() => saveEditHandler(booking)}
+                                                className={styles.btnSave}
+                                            >
+                                                <i className="fa-solid fa-floppy-disk"></i> Запази
+                                            </button>
+                                            <button
+                                                onClick={cancelEditHandler}
+                                                className={styles.btnCancel}
+                                            >
+                                                Отказ
+                                            </button>
+                                        </div>
+                                    )}
+                                </div>
+
+                            </article>
+                        )
+                    })}
                 </div>
             ) : (
                 <div className={styles.emptyState}>
@@ -178,3 +289,4 @@ export default function MyReservations({ userId }) {
         </section>
     );
 }
+
