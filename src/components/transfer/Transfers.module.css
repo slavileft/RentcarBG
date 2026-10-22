@@ -1,8 +1,7 @@
-/* --- Контейнер и Сетка на Предимствата --- */
 .transfersContainer {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 60px 20px;
+    padding: 40px 20px;
 }
 
 .featuresGrid {
@@ -29,7 +28,7 @@
 
 .featureCard i {
     font-size: 32px;
-    color: #d90429; /* Червен корпоративен цвят */
+    color: #d90429;
     margin-bottom: 12px;
 }
 
@@ -44,96 +43,92 @@
     color: #8d99ae;
 }
 
-/* --- Секция за Дестинации --- */
-.destinationsBox {
+/* --- Контейнер на Формата --- */
+.formBox {
     background-color: #ffffff;
     padding: 40px 30px;
     border-radius: 12px;
     border: 1px solid #e5e5e5;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+    max-width: 700px;
+    margin: 0 auto;
 }
 
-.destinationsBox h3 {
-    margin-bottom: 30px;
-    text-align: center;
+.formBox h3 {
     color: #2b2d42;
-    font-size: 24px;
+    margin-bottom: 30px;
+    font-size: 22px;
+    text-align: center;
+    border-bottom: 2px solid #d90429;
+    padding-bottom: 12px;
 }
 
-/* --- Картички за самите Трансфери --- */
-.transferGrid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
-}
-
-.transferCard {
-    background: #ffffff;
-    border: 1px solid #e5e5e5;
-    border-radius: 12px;
-    padding: 30px 20px;
+.transferForm {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    text-align: center;
-    transition: transform 0.2s, box-shadow 0.2s;
+    gap: 20px;
 }
 
-.transferCard:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
-}
-
-.iconWrapper {
-    background-color: #f8f9fa;
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
+.formGroup {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 20px;
-    border: 1px solid #e5e5e5;
+    flex-direction: column;
+    gap: 8px;
 }
 
-.iconWrapper i {
-    font-size: 28px;
-    color: #d90429;
-}
-
-.transferCard h3 {
-    font-size: 20px;
-    color: #2b2d42;
-    margin-bottom: 12px;
-}
-
-.transferCard p {
-    color: #8d99ae;
+.formGroup label {
     font-size: 14px;
-    margin-bottom: 20px;
-    line-height: 1.6;
+    font-weight: 600;
+    color: #2b2d42;
 }
 
-.priceBadge {
-    font-size: 22px;
-    font-weight: 700;
+.formGroup label i {
     color: #d90429;
-    margin-top: auto;
-    margin-bottom: 20px;
+    margin-right: 5px;
+}
+
+.formGroup input {
+    padding: 12px;
+    border: 1px solid #e5e5e5;
+    border-radius: 6px;
+    outline: none;
+    font-size: 15px;
+    background-color: #f8f9fa;
+    color: #2b2d42;
+    transition: border-color 0.2s, background-color 0.2s;
+}
+
+.formGroup input:focus {
+    border-color: #d90429;
+    background-color: #ffffff;
+}
+
+/* Сетка за От и До полетата */
+.routeGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
 }
 
 .btnSubmit {
     background-color: #d90429;
     color: #ffffff;
     border: none;
-    padding: 12px 24px;
+    padding: 14px;
     border-radius: 6px;
     font-weight: 600;
     cursor: pointer;
-    width: 100%;
+    font-size: 16px;
+    margin-top: 10px;
     transition: background-color 0.2s;
 }
 
 .btnSubmit:hover {
     background-color: #b30320;
+}
+
+/* Адаптивност за малки екрани */
+@media (max-width: 600px) {
+    .routeGrid {
+        grid-template-columns: 1fr;
+    }
 }

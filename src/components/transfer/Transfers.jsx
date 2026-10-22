@@ -1,16 +1,44 @@
 import styles from './Transfers.module.css';
+import request from '../../utils/request';
+import { useContext } from 'react';
+import AuthContext from '../../context/auth-context';
 
 export default function Transfers() {
+    const {accessToken} = useContext(AuthContext)
+
+    async function handleTransferAction(formData) {
+        const clientName = formData.get('clientName');
+        const clientEmail = formData.get('clientEmail');
+        const fromLocation = formData.get('fromLocation');
+        const toLocation = formData.get('toLocation');
+
+        const payload = {
+            name: clientName,
+            email: clientEmail,
+            message: `ЗАЯВКА ЗА ТРАНСФЕР: От [${fromLocation}] до [${toLocation}].`
+        };
+
+        try {
+            console.log("Изпращане на трансферна форма", payload);
+            
+            await request(import.meta.env.VITE_REST_URL, "/Contacts", "POST", payload, accessToken);
+
+            alert("Вашата заявка за трансфер беше изпратена успешно! Ще се свържем с вас скоро.");
+        } catch (error) {
+            console.error("Грешка при изпращане на трансфера:", error);
+            alert("Възникна грешка при изпращането. Моля, опитайте отново.");
+        }
+    }
+
     return (
         <main className="main-content">
             <section className={styles.transfersContainer}>
-
+                
                 <div className="section-title">
-                    <h2>Трансфери и Междуградски Пътувания</h2>
-                    <p>Комфортно и сигурно придвижване от летището до всяка точка в България и съседните страни</p>
+                    <h2>Заяви Трансфер</h2>
+                    <p>Попълнете формата по-долу и нашият екип ще организира вашето пътуване</p>
                 </div>
 
-                {/* Сетка с ключови предимства */}
                 <div className={styles.featuresGrid}>
                     <div className={styles.featureCard}>
                         <i className="fa-solid fa-plane-arrival"></i>
@@ -34,34 +62,57 @@ export default function Transfers() {
                     </div>
                 </div>
 
-                {/* Популярни дестинации */}
-                <div className={styles.destinationsBox}>
-                    <h3>Популярни Дестинации за Трансфер</h3>
+                <div className={styles.formBox}>
+                    <h3>Форма за индивидуална трансферна услуга</h3>
+                    
+                    <form action={handleTransferAction} className={styles.transferForm}>
+                        
+                        <div className={styles.formGroup}>
+                            <label>Вашето Име</label>
+                            <input 
+                                type="text" 
+                                name="clientName" 
+                                placeholder="Име и фамилия" 
+                                required 
+                            />
+                        </div>
 
-                    <div className={styles.transferGrid}>
-                        <article className={styles.transferCard}>
-                            <div className={styles.iconWrapper}>
-                                <i className="fa-solid fa-car-side"></i>
+                        <div className={styles.formGroup}>
+                            <label>Електронна Поща</label>
+                            <input 
+                                type="email" 
+                                name="clientEmail" 
+                                placeholder="example@domain.com" 
+                                required 
+                            />
+                        </div>
+
+                        <div className={styles.routeGrid}>
+                            <div className={styles.formGroup}>
+                                <label><i className="fa-solid fa-location-dot"></i> От (Начална точка)</label>
+                                <input 
+                                    type="text" 
+                                    name="fromLocation" 
+                                    placeholder="напр. Летище София Т2, град, адрес..." 
+                                    required 
+                                />
                             </div>
-                            <h3>София — Слънчев Бряг</h3>
-                            <p>Безпроблемно и комфортно семейно пътуване до морето с гарантирана безопасност.</p>
-                            <span className={styles.priceBadge}>Фиксирана цена</span>
-                            {/* TODO: да добавя логика зад този бутон */}
-                            <button className={styles.btnSubmit}>Заяви Трансфер</button>
-                        </article>
 
-                        <article className={styles.transferCard}>
-                            <div className={styles.iconWrapper}>
-                                <i className="fa-solid fa-globe"></i>
+                            <div className={styles.formGroup}>
+                                <label><i className="fa-solid fa-flag"></i> До (Крайна дестинация)</label>
+                                <input 
+                                    type="text" 
+                                    name="toLocation" 
+                                    placeholder="напр. Боровец, Слънчев бряг, хотел..." 
+                                    required 
+                                />
                             </div>
-                            <h3>София — Гърция / Солун</h3>
-                            <p>Международни трансфери с професионални шофьори и нови, отлично поддържани автомобили.</p>
-                            <span className={styles.priceBadge}>Фиксирана цена</span>
-                            {/* TODO: да добавя логика зад този бутон */}
-                            <button className={styles.btnSubmit}>Заяви Трансфер</button>
-                        </article>
-                    </div>
+                        </div>
 
+                        <button type="submit" className={styles.btnSubmit}>
+                            Изпрати заявка за трансфер
+                        </button>
+                    </form>
                 </div>
 
             </section>
