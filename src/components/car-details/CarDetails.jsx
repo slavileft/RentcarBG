@@ -7,7 +7,7 @@ import request from '../../utils/request';
 import AuthContext from '../../context/auth-context';
 
 export default function CarDetails() {
-    const {accessToken, user} = useContext(AuthContext);
+    const { accessToken, user } = useContext(AuthContext);
     const navigate = useNavigate();
     const routerLocation = useLocation();
     const routerState = routerLocation.state || {};
@@ -16,11 +16,14 @@ export default function CarDetails() {
     const [car, setCar] = useState(null);
     const [existingBookings, setExistingBookings] = useState([]); // Списък с резервации за тази кола
 
+    const [pickupLocation, setPickupLocation] = useState(routerState.initialPickupLocation || '');
     const [pickupDate, setPickupDate] = useState(routerState.initialPickupDate || '');
     const [returnDate, setReturnDate] = useState(routerState.initialReturnDate || '');
     const [totalDays, setTotalDays] = useState(0);
     const [totalPrice, setTotalPrice] = useState(0);
     const [isPeriodTaken, setIsPeriodTaken] = useState(false); // Дали избраният период е зает
+
+    const today = new Date().toISOString().split('T')[0];
 
     // 1. Заявка за зареждане на данните на колата и нейните резервации
     useEffect(() => {
@@ -91,6 +94,7 @@ export default function CarDetails() {
 
         const bookingData = {
             carId: carId,
+            location: pickupLocation,
             startDate: pickupDate,
             endDate: returnDate,
             totalPrice: totalPrice,
@@ -98,14 +102,14 @@ export default function CarDetails() {
         };
 
         console.log("Изпращане на нова резервация към Supabase:", bookingData);
-        try{
-            await request(import.meta.env.VITE_REST_URL,"/Reservations", "POST", bookingData);
+        try {
+            await request(import.meta.env.VITE_REST_URL, "/Reservations", "POST", bookingData, accessToken);
             if (accessToken) {
                 navigate("/reservations");
             }
         } catch (error) {
             alert(`Error submitting form:, ${error.message}`)
-        }   
+        }
     };
 
     if (!car) return <p className={styles.loading}>Зареждане на детайли...</p>;
@@ -152,11 +156,26 @@ export default function CarDetails() {
                         <form onSubmit={bookingSubmitHandler} className={styles.bookingForm}>
 
                             <div className={styles.formGroup}>
+                                <label><i className="fa-solid fa-location-dot"></i> Място на наемане</label>
+                                <select
+                                    value={pickupLocation}
+                                    onChange={(e) => setPickupLocation(e.target.value)}
+                                    required
+                                >
+                                    <option value="">Изберете локация...</option>
+                                    <option value="Летище София Т1">Летище София Т1</option>
+                                    <option value="Летище София Т2">Летище София Т2</option>
+                                    <option value="Офис - Александър Жендов №6">Офис - Александър Жендов №6</option>
+                                </select>
+                            </div>
+
+                            <div className={styles.formGroup}>
                                 <label><i className="fa-solid fa-calendar-days"></i> Дата на вземане</label>
                                 <input
                                     type="date"
                                     value={pickupDate}
                                     onChange={(e) => setPickupDate(e.target.value)}
+                                    min={today}
                                     required
                                 />
                             </div>
@@ -167,6 +186,7 @@ export default function CarDetails() {
                                     type="date"
                                     value={returnDate}
                                     onChange={(e) => setReturnDate(e.target.value)}
+                                    min={today}
                                     required
                                 />
                             </div>

@@ -4,7 +4,7 @@ import CarCard from "./../car-card/CarCard";
 import request from "../../utils/request";
 import AuthContext from "../../context/auth-context";
 
-export default function Catalog({ allBookings, searchPickupDate, searchReturnDate }) {
+export default function Catalog({ allBookings, pickupLocation, searchPickupDate, searchReturnDate }) {
     const {accessToken} = useContext(AuthContext);
     const [selectedClass, setSelectedClass] = useState('');
     const [selectedGear, setSelectedGear] = useState('');
@@ -67,6 +67,7 @@ export default function Catalog({ allBookings, searchPickupDate, searchReturnDat
                         <CarCard 
                             key={car.id} 
                             {...car} 
+                            passedPickupLocation={pickupLocation}
                             passedPickupDate={searchPickupDate}
                             passedReturnDate={searchReturnDate}
                         />

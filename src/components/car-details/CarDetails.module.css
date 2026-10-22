@@ -109,6 +109,21 @@
     border-color: #d90429;
 }
 
+.formGroup select {
+    padding: 12px;
+    border: 1px solid #e5e5e5;
+    border-radius: 6px;
+    background-color: #ffffff;
+    font-size: 15px;
+    color: #2b2d42;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.formGroup select:focus {
+    border-color: #d90429;
+}
+
 /* --- Резюме на цената --- */
 .priceSummary {
     background-color: #ffffff;

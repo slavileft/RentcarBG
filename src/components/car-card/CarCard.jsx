@@ -10,6 +10,7 @@ export default function CarCard({
     carSeats,
     carPrice,
     promoPrice,
+    passedPickupLocation,
     passedPickupDate,
     passedReturnDate
 }) {
@@ -20,6 +21,7 @@ export default function CarCard({
     const carDetailsClickHandler = () => {
         navigate(`/cars/${id}`, {
             state: {
+                initialPickupLocation: passedPickupLocation,
                 initialPickupDate: passedPickupDate,
                 initialReturnDate: passedReturnDate
             }

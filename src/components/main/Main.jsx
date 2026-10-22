@@ -24,6 +24,7 @@ export default function Main({catalogOnly}) {
 
             <Catalog
                 allBookings={allBookings}
+                pickupLocation={bookingData.pickupLocation}
                 searchPickupDate={bookingData.pickupDate}
                 searchReturnDate={bookingData.returnDate}
             />
