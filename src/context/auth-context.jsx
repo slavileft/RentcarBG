@@ -1,7 +1,7 @@
 import { createContext } from "react";
 import { useNavigate } from "react-router";
-import { authApi } from "../api"
-import usePersistedState from "../hooks/usePersistedState.js";
+import { authApi } from "../api/index"
+import usePersistedState from "../hooks/usePersistedState";
 
 
 const AuthContext = createContext({
@@ -57,8 +57,8 @@ export function AuthProvider({
         accessToken: auth?.access_token,
         user: auth?.user,
         isAuthenticated: !!auth,
-        registerHandler,
-        loginHandler,
+        register: registerHandler,
+        login: loginHandler,
         logout: logoutHandler,
     }
 

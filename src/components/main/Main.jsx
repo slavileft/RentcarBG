@@ -4,7 +4,7 @@ import Catalog from "../catalog/Catalog";
 import request from "../../utils/request";
 import AuthContext from "../../context/auth-context";
 
-export default function Main() {
+export default function Main({catalogOnly}) {
     const { accessToken } = useContext(AuthContext);
     const [bookingData, setBookingData] = useState({});
 
@@ -20,7 +20,7 @@ export default function Main() {
 
     return (
         <main className="main-content">
-            <Booking setBookingData={setBookingData} />
+            {!catalogOnly && <Booking setBookingData={setBookingData} />}
 
             <Catalog
                 allBookings={allBookings}

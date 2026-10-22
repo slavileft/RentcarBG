@@ -4,7 +4,7 @@ import styles from '../login/Login.module.css';
 import AuthContext from '../../context/auth-context';
 
 export default function Register() {
-    const {onRegister} = useContext(AuthContext)
+    const {register} = useContext(AuthContext)
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -27,7 +27,7 @@ export default function Register() {
             return;
         }
 
-        onRegister({ email, password });
+        register({ email, password });
     };
 
     return (

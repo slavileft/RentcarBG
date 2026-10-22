@@ -10,7 +10,6 @@ export default function CarCard({
     carSeats,
     carPrice,
     promoPrice,
-    isAvailable,
     passedPickupDate,
     passedReturnDate
 }) {
@@ -28,7 +27,7 @@ export default function CarCard({
     };
 
     return (
-        <article className={`car-card ${!isAvailable && 'unavailable'}`}>
+        <article className="car-card" >
             <span className="badge">{carClass}</span>
             {hasPromo && <span className="promo-badge">% Оферта</span>}
             <div className="car-image-wrapper">
@@ -55,11 +54,7 @@ export default function CarCard({
                         <span className="price-period">/ ден</span>
 
                     </div>
-                    {isAvailable ? (
-                        <button className="btn-secondary" onClick={carDetailsClickHandler}>Виж детайли</button>
-                    ) : (
-                        <button className="btn-disabled" disabled>Резервирана</button>
-                    )}
+                    <button className="btn-secondary" onClick={carDetailsClickHandler}>Виж детайли</button>
                 </div>
             </div>
         </article>

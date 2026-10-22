@@ -4,7 +4,7 @@ import styles from './Login.module.css';
 import AuthContext from '../../context/auth-context';
 
 export default function Login() {
-    const {onLogin} = useContext(AuthContext)
+    const {login} = useContext(AuthContext)
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -21,7 +21,7 @@ export default function Login() {
             return;
         }
         
-        onLogin({email, password});
+        login({email, password});
     };
 
     return (

@@ -12,7 +12,8 @@ export default function Header() {
                     <Link to="/">RENTCAR<span>.bg</span></Link>
                 </div>
                 <nav className="main-nav">
-                    <ul><li><NavLink to="/">Автомобили</NavLink></li>
+                    <ul>
+                        <li><NavLink to="/cars">Автомобили</NavLink></li>
                         <li><NavLink to="/transfers">Трансфери</NavLink></li>
                         <li><NavLink to="/offers">Оферти</NavLink></li>
                         {user && <li><NavLink to="/reservations">Моите Резервации</NavLink></li>}

@@ -15,7 +15,7 @@ export default function Footer() {
                 <div className="footer-links">
                     <h4>Бързи връзки</h4>
                     <ul>
-                        <li><Link to="/">Автомобили</Link></li>
+                        <li><Link to="/cars">Автомобили</Link></li>
                         <li><Link to="/transfers">Трансфери</Link></li>
                         <li><Link to="#">Общи условия</Link></li>
                         <li><Link to="/about">За нас</Link></li>

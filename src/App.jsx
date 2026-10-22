@@ -1,6 +1,6 @@
-import { Routes, Route, useNavigate } from "react-router"
+import { Routes, Route } from "react-router"
 
-import { AuthProvider } from "./context/auth-context.js";
+import { AuthProvider } from "./context/auth-context";
 
 import Header from "./components/header/Header.jsx"
 import Main from "./components/main/Main.jsx"
@@ -22,7 +22,8 @@ function App() {
             <Header />
 
             <Routes>
-                <Route path="/" element={<Main />} />
+                <Route path="/" element={<Main catalogOnly={false}/>} />
+                <Route path="/cars" element={<Main catalogOnly={true} />} />
                 <Route path="/cars/:carId" element={<CarDetails />} />
                 <Route path="/transfers" element={<Transfers />} />
                 <Route path="/offers" element={<Offers />} />
