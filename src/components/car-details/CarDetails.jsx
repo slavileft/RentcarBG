@@ -5,6 +5,7 @@ import { useLocation } from 'react-router';
 import styles from './CarDetails.module.css';
 import request from '../../utils/request';
 import AuthContext from '../../context/auth-context';
+import { toast } from 'sonner';
 
 export default function CarDetails() {
     const { accessToken, user } = useContext(AuthContext);
@@ -84,7 +85,7 @@ export default function CarDetails() {
     const bookingSubmitHandler = async (e) => {
         e.preventDefault();
         if (totalDays <= 0) {
-            alert("Моля, изберете валиден период от време!");
+            toast("Моля, изберете валиден период от време!");
             return;
         }
         if (isPeriodTaken) {
@@ -101,7 +102,6 @@ export default function CarDetails() {
             userId: user?.id
         };
 
-        console.log("Изпращане на нова резервация към Supabase:", bookingData);
         try {
             await request(import.meta.env.VITE_REST_URL, "/Reservations", "POST", bookingData, accessToken);
             if (accessToken) {

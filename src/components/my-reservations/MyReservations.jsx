@@ -3,6 +3,7 @@ import { useEffect, useState, useContext } from 'react';
 import styles from './MyReservations.module.css';
 import request from '../../utils/request.js';
 import AuthContext from '../../context/auth-context';
+import { toast } from 'sonner';
 
 export default function MyReservations() {
     const { accessToken, user } = useContext(AuthContext);
@@ -57,7 +58,7 @@ export default function MyReservations() {
 
                 setReservations(combinedData);
             } catch (error) {
-                alert(`Error fetching reservations:, ${error.message}`);
+                console.error(`Error fetching reservations:, ${error.message}`);
                 setError('Възникна грешка при зареждането на вашите резервации.');
             } finally {
                 setIsLoading(false);
@@ -86,7 +87,7 @@ export default function MyReservations() {
             setReservations(prev => prev.filter(b => b.id !== bookingId));
         } catch (err) {
             console.error('Error deleting booking:', err);
-            alert('Неуспешно анулиране. Моля, опитайте отново.');
+            setError('Неуспешно анулиране. Моля, опитайте отново.');
         }
     };
 
@@ -113,7 +114,7 @@ export default function MyReservations() {
     // 3. Запазване на промените (PATCH заявка)
     const saveEditHandler = async (booking) => {
         if (new Date(editPickupDate) > new Date(editReturnDate)) {
-            alert("Датата на връщане не може да бъде преди давата на вземане!");
+            toast.error("Датата на връщане не може да бъде преди давата на вземане!");
             return;
         }
 
@@ -123,7 +124,7 @@ export default function MyReservations() {
         const totalDays = Math.ceil(differenceInTime / (1000 * 3600 * 24)) + 1;
 
         if (totalDays <= 0) {
-            alert("Минималният период за наем е 1 ден.");
+            toast.info("Минималният период за наем е 1 ден.");
             return;
         }
 
@@ -144,7 +145,7 @@ export default function MyReservations() {
             setEditingBookingId(null);
         } catch (err) {
             console.error('Error updating booking:', err);
-            alert('Неуспешна промяна. Моля, опитайте отново.');
+            setError('Неуспешна промяна. Моля, опитайте отново.');
         }
     };
 

@@ -1,4 +1,5 @@
 import { Routes, Route } from "react-router"
+import { Toaster } from "sonner";
 
 import { AuthProvider } from "./context/auth-context";
 
@@ -15,12 +16,13 @@ import Login from "./components/login/Login.jsx";
 import Register from "./components/register/Register.jsx";
 import Logout from "./components/logout/Logout.jsx";
 import AuthGuard from "./components/guards/AuthGuard.jsx";
-import GuestGuard from "./components/guards/GuesGuard.jsx";
+import GuestGuard from "./components/guards/GuestGuard.jsx";
 
 function App() {
 
     return (
         <AuthProvider>
+            <Toaster position="bottom-right" theme="system" richColors closeButton />
             <Header />
 
             <Routes>

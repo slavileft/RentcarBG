@@ -1,3 +1,5 @@
+import { toast } from "sonner";
+
 export default function Booking({ setBookingData }) {
     const today = new Date().toISOString().split('T')[0];
 
@@ -7,22 +9,22 @@ export default function Booking({ setBookingData }) {
         const returnDate = formData.get("returnDate");
 
         if (!pickupLocation) {
-            alert("Моля, изберете локация!");
+            toast.error("Моля, изберете локация!");
             return;
         }
 
         if (!pickupDate) {
-            alert("Моля, изберете дата на наемане!");
+            toast.info("Моля, изберете дата на наемане!");
             return;
         }
 
         if (!returnDate) {
-            alert("Моля, изберете дата на връщане!");
+            toast.message("Моля, изберете дата на връщане!");
             return;
         }
 
         if (pickupDate && returnDate && new Date(pickupDate) > new Date(returnDate)) {
-            alert("Датата на връщане не може да бъде преди датата на вземане!");
+            toast.message("Датата на връщане не може да бъде преди датата на вземане!");
             return;
         }
 
