@@ -1,0 +1,99 @@
+/* Цветова палитра: ярко червено #d90429, бяло #ffffff, тъмносиво #2b2d42 */
+
+.termsSection {
+    padding: 60px 20px;
+    min-height: 80vh;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.header h2 {
+    color: #2b2d42;
+    font-size: 2.2rem;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.header p {
+    color: #8d99ae;
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.5;
+}
+
+.contentGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.termsCard {
+    background-color: #ffffff;
+    border: 1px solid #edf2f4;
+    border-radius: 8px;
+    padding: 30px;
+    box-shadow: 0 4px 15px rgba(43, 45, 66, 0.03);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.termsCard:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(43, 45, 66, 0.07);
+}
+
+.termsCard h3 {
+    color: #2b2d42;
+    font-size: 1.3rem;
+    margin-top: 0;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 2px solid #f8f9fa;
+    padding-bottom: 12px;
+}
+
+.termsCard h3 i {
+    color: #d90429;
+    font-size: 1.4rem;
+}
+
+.termsCard p {
+    color: #2b2d42;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin: 0 0 12px 0;
+}
+
+.termsCard p:last-child {
+    margin-bottom: 0;
+}
+
+/* Специално подчертаване за сериозните забрани */
+.dangerCard {
+    border-top: 4px solid #d90429;
+    background-color: #fff5f5;
+}
+
+/* Адаптивност */
+@media (max-width: 768px) {
+    .termsSection {
+        padding: 40px 15px;
+    }
+
+    .header h2 {
+        font-size: 1.8rem;
+    }
+
+    .contentGrid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+}

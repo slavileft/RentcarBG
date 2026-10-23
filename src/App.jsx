@@ -17,6 +17,8 @@ import Register from "./components/register/Register.jsx";
 import Logout from "./components/logout/Logout.jsx";
 import AuthGuard from "./components/guards/AuthGuard.jsx";
 import GuestGuard from "./components/guards/GuestGuard.jsx";
+import NotFound from "./components/not-found/NotFound.jsx"
+import Terms from "./components/terms/Terms.jsx";
 
 function App() {
 
@@ -33,6 +35,7 @@ function App() {
                 <Route path="/offers" element={<Offers />} />
                 <Route path="/contacts" element={<Contacts />} />
                 <Route path="/about" element={<About />} />
+                <Route path="/terms" element={<Terms />} />
                 <Route path="/logout" element={<Logout />} />
 
                 {/* only guests */}
@@ -45,6 +48,7 @@ function App() {
                 <Route element={<AuthGuard />}>
                     <Route path="/reservations" element={<MyReservations />} />
                 </Route>
+                <Route path="*" element={<NotFound />} />
             </Routes>
 
             <Footer />

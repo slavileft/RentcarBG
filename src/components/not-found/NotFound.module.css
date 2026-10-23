@@ -1,0 +1,60 @@
+/* Цветова палитра: ярко червено #d90429, тъмносиво #2b2d42, светло сиво #8d99ae */
+
+.notFoundContainer {
+    min-height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background-color: #ffffff;
+    text-align: center;
+}
+
+.errorContent {
+    max-width: 500px;
+    width: 100%;
+}
+
+.errorCode {
+    font-size: 7rem;
+    font-weight: 800;
+    color: #2b2d42;
+    margin: 0;
+    line-height: 1;
+    letter-spacing: -2px;
+}
+
+.carIconWrapper {
+    font-size: 3.5rem;
+    color: #d90429;
+    margin: 15px 0 25px 0;
+    animation: shake 0.5s infinite alternate;
+}
+
+.errorContent h2 {
+    font-size: 1.8rem;
+    color: #2b2d42;
+    margin: 0 0 10px 0;
+    text-transform: uppercase;
+}
+
+.errorContent p {
+    color: #8d99ae;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+.errorContent button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    font-weight: 600;
+}
+
+/* Анимация за леко подскачане на иконката */
+@keyframes shake {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-8px); }
+}
