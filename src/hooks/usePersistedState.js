@@ -1,15 +1,18 @@
 import { useState } from "react";
 
-
 export default function usePersistedState(key, initialState) {
     const [state, setState] = useState(() => {
-        const persistedState = localStorage.getItem(key);
+        try {
+            const persistedState = localStorage.getItem(key);
 
-        if (persistedState) {
-            return JSON.parse(persistedState);
+            if (persistedState) {
+                return JSON.parse(persistedState);
+            }
+        } catch {
+            // storage unavailable or the saved text is broken: start fresh
         }
 
-        return initialState
+        return initialState;
     });
 
     const setPersistedState = (value) => {
@@ -18,11 +21,19 @@ export default function usePersistedState(key, initialState) {
         if (typeof value === 'function') {
             resultState = value(state);
         }
-        
-        localStorage.setItem(key, JSON.stringify(resultState));
+
+        try {
+            if (resultState === null || resultState === undefined) {
+                localStorage.removeItem(key);
+            } else {
+                localStorage.setItem(key, JSON.stringify(resultState));
+            }
+        } catch {
+            // storage full or blocked: the app keeps working, just without saving
+        }
 
         setState(resultState);
-    }
+    };
 
     return [state, setPersistedState];
 }

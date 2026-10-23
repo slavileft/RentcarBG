@@ -4,7 +4,7 @@ A React single-page application for the car rental company rentcar.bg.
 Browse the fleet, check availability for chosen dates, make and manage reservations.
 
 ## Live demo
-(link will be added after deployment)
+https://rentcarbg.st-lefterov.workers.dev/
 
 ## Tech stack
 React 19, React Router 8, Vite, Supabase (database + authentication)
