@@ -4,24 +4,25 @@ import styles from './Login.module.css';
 import AuthContext from '../../context/auth-context';
 
 export default function Login() {
-    const {login} = useContext(AuthContext)
+    const { login } = useContext(AuthContext)
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleSubmit = (e) => {
+    const [error, setError] = useState('');
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        setError('');
 
-        if (!email) {
-            alert('Полето email е задължително!');
-            return;
+        setIsSubmitting(true);
+        try {
+            await login({ email, password });
+        } catch (err) {
+            setError(err.message);
+        } finally {
+            setIsSubmitting(false);
         }
-
-        if (!password) {
-            alert('Полето password е задължително!');
-            return;
-        }
-        
-        login({email, password});
     };
 
     return (
@@ -53,7 +54,10 @@ export default function Login() {
                         />
                     </div>
 
-                    <button type="submit" className={styles.btnSubmit}>Вход</button>
+                    {error && <p className="form-error">{error}</p>}
+                    <button type="submit" className={styles.btnSubmit} disabled={isSubmitting}>
+                        {isSubmitting ? 'Влизане...' : 'Вход'}
+                    </button>
                 </form>
 
                 <p className={styles.switchAuth}>

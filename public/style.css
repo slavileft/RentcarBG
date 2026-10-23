@@ -443,3 +443,13 @@ textarea:focus {
     color: #d90429 !important;
     font-weight: 700;
 }
+
+.form-error {
+    background: #fdecea;
+    color: #b71c1c;
+    border-left: 4px solid #b71c1c;
+    padding: 10px 14px;
+    border-radius: 6px;
+    margin: 10px 0;
+    font-size: 0.95rem;
+}

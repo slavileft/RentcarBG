@@ -4,30 +4,30 @@ import styles from '../login/Login.module.css';
 import AuthContext from '../../context/auth-context';
 
 export default function Register() {
-    const {register} = useContext(AuthContext)
+    const { register } = useContext(AuthContext)
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [error, setError] = useState('');
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-
-        if (password.length < 6){
-            alert("Паролата трябва да е повече от 6 символа!");
-            return;
-        }
+        setError('');
 
         if (password !== confirmPassword) {
-            alert("Паролите не съвпадат!");
+            setError("Паролите не съвпадат!");
             return;
         }
 
-        if (!email || !password || !confirmPassword) {
-            alert("Всички полета трябва да са попълнени!");
-            return;
+        setIsSubmitting(true);
+        try {
+            await register({ email, password });
+        } catch (err) {
+            setError(err.message);
+        } finally {
+            setIsSubmitting(false);
         }
-
-        register({ email, password });
     };
 
     return (
@@ -55,6 +55,7 @@ export default function Register() {
                             placeholder="Минимум 6 символа"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
+                            minLength={6}
                             required
                         />
                     </div>
@@ -70,7 +71,10 @@ export default function Register() {
                         />
                     </div>
 
-                    <button type="submit" className={styles.btnSubmit}>Регистрация</button>
+                    {error && <p className="form-error">{error}</p>}
+                    <button type="submit" className={styles.btnSubmit} disabled={isSubmitting}>
+                        {isSubmitting ? 'Регистрация...' : 'Регистрация'}
+                    </button>
                 </form>
 
                 <p className={styles.switchAuth}>

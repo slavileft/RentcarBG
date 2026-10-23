@@ -3,6 +3,7 @@ import SearchFilter from "../search-filter/SearchFilter";
 import CarCard from "./../car-card/CarCard";
 import request from "../../utils/request";
 import AuthContext from "../../context/auth-context";
+import { toast } from "sonner";
 
 export default function Catalog({ allBookings, pickupLocation, searchPickupDate, searchReturnDate }) {
     const {accessToken} = useContext(AuthContext);
@@ -13,7 +14,7 @@ export default function Catalog({ allBookings, pickupLocation, searchPickupDate,
     useEffect(() => {
         request(import.meta.env.VITE_REST_URL, "/Cars", "GET", null, accessToken)
             .then(data => setCars(data))
-            .catch(error => alert(`Error fetching car data:, ${error.message}`));
+            .catch(error => toast.error(`Error fetching car data:, ${error.message}`));
     }, [accessToken]);
 
     const filteredCars = cars.filter(car => {

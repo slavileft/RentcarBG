@@ -20,27 +20,19 @@ export function AuthProvider({
     const [auth, setAuth] = usePersistedState('auth', null);
 
     const registerHandler = async (userData) => {
-        try {
-            const result = await authApi.register(userData);
+        const result = await authApi.register(userData);
 
-            setAuth(result);
+        setAuth(result);
 
-            navigate("/");
-        } catch (error) {
-            alert(error.message);
-        }
+        navigate("/");
     };
 
     const loginHandler = async (userData) => {
-        try {
-            const result = await authApi.login(userData);
+        const result = await authApi.login(userData);
 
-            setAuth(result);
+        setAuth(result);
 
-            navigate("/");
-        } catch (error) {
-            alert(error.message);
-        }
+        navigate("/");
     };
 
     const logoutHandler = async () => {
@@ -50,7 +42,7 @@ export function AuthProvider({
         } catch (error) {
             alert(error.message);
         }
-        finally{
+        finally {
             setAuth(null);
         }
     }

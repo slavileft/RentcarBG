@@ -1,30 +1,33 @@
-import { toast } from "sonner";
+import { useState } from "react";
 
 export default function Booking({ setBookingData }) {
     const today = new Date().toISOString().split('T')[0];
+    const [error, setError] = useState('');
 
     const searchActionHandler = (formData) => {
         const pickupLocation = formData.get("pickupLocation");
         const pickupDate = formData.get("pickupDate");
         const returnDate = formData.get("returnDate");
 
+        setError('');
+
         if (!pickupLocation) {
-            toast.error("Моля, изберете локация!");
+            setError("Моля, изберете локация!");
             return;
         }
 
         if (!pickupDate) {
-            toast.info("Моля, изберете дата на наемане!");
+            setError("Моля, изберете дата на наемане!");
             return;
         }
 
         if (!returnDate) {
-            toast.message("Моля, изберете дата на връщане!");
+            setError("Моля, изберете дата на връщане!");
             return;
         }
 
         if (pickupDate && returnDate && new Date(pickupDate) > new Date(returnDate)) {
-            toast.message("Датата на връщане не може да бъде преди датата на вземане!");
+            setError("Датата на връщане не може да бъде преди датата на вземане!");
             return;
         }
 
@@ -53,10 +56,11 @@ export default function Booking({ setBookingData }) {
                         </div>
                         <div className="form-group">
                             <label><i className="fa-solid fa-calendar-days"></i> Дата на връщане</label>
-                            <input type="date" name="returnDate" min={today}/>
+                            <input type="date" name="returnDate" min={today} />
                         </div>
                         <button type="submit" className="btn-accent">Търсене</button>
                     </form>
+                    {error && <p className="form-error">{error}</p>}
                 </div>
             </div>
         </section>

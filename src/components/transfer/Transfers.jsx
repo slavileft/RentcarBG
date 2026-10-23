@@ -2,6 +2,7 @@ import styles from './Transfers.module.css';
 import request from '../../utils/request';
 import { useContext } from 'react';
 import AuthContext from '../../context/auth-context';
+import { toast } from 'sonner';
 
 export default function Transfers() {
     const {accessToken} = useContext(AuthContext)
@@ -19,14 +20,12 @@ export default function Transfers() {
         };
 
         try {
-            console.log("Изпращане на трансферна форма", payload);
-            
             await request(import.meta.env.VITE_REST_URL, "/Contacts", "POST", payload, accessToken);
 
-            alert("Вашата заявка за трансфер беше изпратена успешно! Ще се свържем с вас скоро.");
+            toast.success("Вашата заявка за трансфер беше изпратена успешно! Ще се свържем с вас скоро.");
         } catch (error) {
             console.error("Грешка при изпращане на трансфера:", error);
-            alert("Възникна грешка при изпращането. Моля, опитайте отново.");
+            toast.error("Възникна грешка при изпращането. Моля, опитайте отново.");
         }
     }
 

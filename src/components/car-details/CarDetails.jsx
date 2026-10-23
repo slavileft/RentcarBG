@@ -31,12 +31,12 @@ export default function CarDetails() {
         // Взимаме данните за автомобила
         request(import.meta.env.VITE_REST_URL, `/Cars?id=eq.${carId}`)
             .then(data => setCar(data[0]))
-            .catch(error => alert(`Error fetching car data:, ${error.message}`));
+            .catch(error => toast.error(`Error fetching car data:, ${error.message}`));
 
         // Взимаме съществуващите резервации от Supabase за тази конкретна кола
         request(import.meta.env.VITE_REST_URL, `/Reservations?carId=eq.${carId}`)
             .then(data => setExistingBookings(data))
-            .catch(error => alert(`Error fetching bookings:, ${error.message}`));
+            .catch(error => toast.error(`Error fetching bookings:, ${error.message}`));
     }, [carId]);
 
     // 2. Логика за изчисляване на дни, цена и проверка за застъпване (Overlap)
@@ -89,7 +89,7 @@ export default function CarDetails() {
             return;
         }
         if (isPeriodTaken) {
-            alert("За съжаление, автомобилът вече е резервиран за тези дати!");
+            toast.info("За съжаление, автомобилът вече е резервиран за тези дати!");
             return;
         }
 
@@ -108,7 +108,7 @@ export default function CarDetails() {
                 navigate("/reservations");
             }
         } catch (error) {
-            alert(`Error submitting form:, ${error.message}`)
+            toast.error(`Error submitting form:, ${error.message}`)
         }
     };
 

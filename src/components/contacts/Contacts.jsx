@@ -1,4 +1,5 @@
 import { useContext, useState } from 'react';
+import { toast } from 'sonner';
 
 import styles from './Contacts.module.css';
 import request from '../../utils/request';
@@ -20,9 +21,9 @@ export default function Contacts() {
             setName('');
             setEmail('');
             setMessage('');
-            alert("Благодарим ви! Вашето съобщение беше изпратено успешно.");
+            toast.success("Благодарим ви! Вашето съобщение беше изпратено успешно.");
         } catch (error) {
-            alert(`Error submitting form:, ${error.message}`)
+            toast.error(`Error submitting form:, ${error.message}`)
         }
     };
 

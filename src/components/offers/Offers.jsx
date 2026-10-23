@@ -3,6 +3,7 @@ import { useState, useEffect } from "react"
 import CarCard from "../car-card/CarCard";
 import styles from './Offers.module.css';
 import request from "../../utils/request";
+import { toast } from "sonner";
 
 export default function Offers() {
     const [cars, setCars] = useState([]);
@@ -10,7 +11,7 @@ export default function Offers() {
     useEffect(() => {
         request(import.meta.env.VITE_REST_URL, "/Cars")
             .then(data => setCars(data))
-            .catch(error => console.error('Error fetching car data:', error));
+            .catch(error => toast.error('Error fetching car data:', error));
     }, []);
 
     const promoCars = cars.filter(car => car.promoPrice !== null && car.promoPrice !== undefined);
