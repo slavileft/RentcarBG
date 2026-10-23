@@ -36,15 +36,16 @@ export function AuthProvider({
     };
 
     const logoutHandler = async () => {
-        try {
-            await authApi.logout(auth?.access_token);
+        const token = auth?.access_token;
+    setAuth(null);                  // log out locally first
 
-        } catch (error) {
-            alert(error.message);
+    if (token) {
+        try {
+            await authApi.logout(token);
+        } catch {
+            // ignore: the user is already logged out
         }
-        finally {
-            setAuth(null);
-        }
+    }
     }
 
     const contextValue = {

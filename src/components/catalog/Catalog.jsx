@@ -1,21 +1,16 @@
-import { useState, useEffect, useContext } from "react"
+import { useState, useContext } from "react"
+
+import useFetch from "../../hooks/useFetch";
+
 import SearchFilter from "../search-filter/SearchFilter";
 import CarCard from "./../car-card/CarCard";
-import request from "../../utils/request";
 import AuthContext from "../../context/auth-context";
-import { toast } from "sonner";
 
 export default function Catalog({ allBookings, pickupLocation, searchPickupDate, searchReturnDate }) {
-    const {accessToken} = useContext(AuthContext);
+    const { accessToken } = useContext(AuthContext);
     const [selectedClass, setSelectedClass] = useState('');
     const [selectedGear, setSelectedGear] = useState('');
-    const [cars, setCars] = useState([]);
-
-    useEffect(() => {
-        request(import.meta.env.VITE_REST_URL, "/Cars", "GET", null, accessToken)
-            .then(data => setCars(data))
-            .catch(error => toast.error(`Error fetching car data:, ${error.message}`));
-    }, [accessToken]);
+    const { data: cars, isLoading, error } = useFetch('/Cars', [], accessToken);
 
     const filteredCars = cars.filter(car => {
         const matchesClass = selectedClass === '' || car.carClass === selectedClass;
@@ -54,7 +49,7 @@ export default function Catalog({ allBookings, pickupLocation, searchPickupDate,
                     <p>Изберете перфектния автомобил за вашето пътуване</p>
                 </div>
             )}
-            
+
             <SearchFilter
                 selectedClass={selectedClass}
                 setSelectedClass={setSelectedClass}
@@ -62,23 +57,34 @@ export default function Catalog({ allBookings, pickupLocation, searchPickupDate,
                 setSelectedGear={setSelectedGear}
             />
 
-            {filteredCars.length > 0 ? (
-                <div className="cars-grid">
-                    {filteredCars.map((car) => (
-                        <CarCard 
-                            key={car.id} 
-                            {...car} 
-                            passedPickupLocation={pickupLocation}
-                            passedPickupDate={searchPickupDate}
-                            passedReturnDate={searchReturnDate}
-                        />
-                    ))}
-                </div>
-            ) : (
-                <p style={{ textAlign: 'center', color: '#8d99ae', padding: '40px 0', fontSize: '16px' }}>
-                    Няма намерени автомобили, отговарящи на избраните критерии или период.
+            {isLoading && (
+                <p style={{ textAlign: 'center', color: '#8d99ae', padding: '40px 0' }}>
+                    Зареждане на автомобилите...
                 </p>
             )}
+
+            {error && <p className="form-error">Грешка при зареждане: {error}</p>}
+
+            {!isLoading && !error && (
+                filteredCars.length > 0 ? (
+                    <div className="cars-grid">
+                        {filteredCars.map((car) => (
+                            <CarCard
+                                key={car.id}
+                                {...car}
+                                passedPickupLocation={pickupLocation}
+                                passedPickupDate={searchPickupDate}
+                                passedReturnDate={searchReturnDate}
+                            />
+                        ))}
+                    </div>
+                ) : (
+                    <p style={{ textAlign: 'center', color: '#8d99ae', padding: '40px 0', fontSize: '16px' }}>
+                        Няма намерени автомобили, отговарящи на избраните критерии или период.
+                    </p>
+                )
+            )}
+
         </section>
     );
 }

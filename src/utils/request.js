@@ -40,7 +40,7 @@ export default async function request(url, path, method = 'GET', data = null, to
     try {
         body = await response.json();
     } catch {
-        body = null;
+        // body = null;
     }
 
     if (!response.ok) {

@@ -1,9 +1,9 @@
-import { useParams, useNavigate } from 'react-router';
-import { useContext, useEffect, useState } from 'react';
-import { useLocation } from 'react-router';
+import { useParams, useNavigate, useLocation, Link } from 'react-router';
+import { useContext, useState } from 'react';
 
 import styles from './CarDetails.module.css';
 import request from '../../utils/request';
+import useFetch from '../../hooks/useFetch';
 import AuthContext from '../../context/auth-context';
 import { toast } from 'sonner';
 
@@ -14,75 +14,42 @@ export default function CarDetails() {
     const routerState = routerLocation.state || {};
 
     const { carId } = useParams();
-    const [car, setCar] = useState(null);
-    const [existingBookings, setExistingBookings] = useState([]); // Списък с резервации за тази кола
 
     const [pickupLocation, setPickupLocation] = useState(routerState.initialPickupLocation || '');
     const [pickupDate, setPickupDate] = useState(routerState.initialPickupDate || '');
     const [returnDate, setReturnDate] = useState(routerState.initialReturnDate || '');
-    const [totalDays, setTotalDays] = useState(0);
-    const [totalPrice, setTotalPrice] = useState(0);
-    const [isPeriodTaken, setIsPeriodTaken] = useState(false); // Дали избраният период е зает
 
     const today = new Date().toISOString().split('T')[0];
 
-    // 1. Заявка за зареждане на данните на колата и нейните резервации
-    useEffect(() => {
-        // Взимаме данните за автомобила
-        request(import.meta.env.VITE_REST_URL, `/Cars?id=eq.${carId}`)
-            .then(data => setCar(data[0]))
-            .catch(error => toast.error(`Error fetching car data:, ${error.message}`));
+    const { data: carList, isLoading: carLoading, error: carError } =
+        useFetch(`/Cars?id=eq.${carId}`, []);
 
-        // Взимаме съществуващите резервации от Supabase за тази конкретна кола
-        request(import.meta.env.VITE_REST_URL, `/Reservations?carId=eq.${carId}`)
-            .then(data => setExistingBookings(data))
-            .catch(error => toast.error(`Error fetching bookings:, ${error.message}`));
-    }, [carId]);
+    const { data: existingBookings, isLoading: bookingsLoading, error: bookingsError } =
+        useFetch(`/Reservations?carId=eq.${carId}`, []);
 
-    // 2. Логика за изчисляване на дни, цена и проверка за застъпване (Overlap)
-    useEffect(() => {
-        if (!car) return;
+    const car = carList[0];
+    const isLoading = carLoading || bookingsLoading;
+    const error = carError || bookingsError;
 
-        if (pickupDate && returnDate) {
-            const start = new Date(pickupDate);
-            const end = new Date(returnDate);
+    let totalDays = 0;
+    let totalPrice = 0;
+    let isPeriodTaken = false;
 
-            const differenceInTime = end.getTime() - start.getTime();
-            const differenceInDays = Math.ceil(differenceInTime / (1000 * 3600 * 24)) + 1;
+    if (car && pickupDate && returnDate) {
+        const start = new Date(pickupDate);
+        const end = new Date(returnDate);
+        const days = Math.ceil((end - start) / (1000 * 3600 * 24)) + 1;
 
-            if (differenceInDays > 0) {
-                setTotalDays(differenceInDays);
-
-                // Проверка за офертна цена (promoPrice)
-                const activePrice = (car.promoPrice !== null && car.promoPrice !== undefined)
-                    ? car.promoPrice
-                    : car.carPrice;
-
-                setTotalPrice(differenceInDays * activePrice);
-
-                // ПРОВЕРКА ЗА ЗАСТЪПВАНЕ НА ДАТИТЕ (Overlap проверка)
-                let taken = false;
-                for (let booking of existingBookings) {
-                    const bookingStart = new Date(booking.startDate);
-                    const bookingEnd = new Date(booking.endDate);
-
-                    // Математическа формула за припокриване на периоди
-                    if (start <= bookingEnd && end >= bookingStart) {
-                        taken = true;
-                        break;
-                    }
-                }
-                setIsPeriodTaken(taken);
-
-            } else {
-                setTotalDays(0);
-                setTotalPrice(0);
-                setIsPeriodTaken(false);
-            }
+        if (days > 0) {
+            totalDays = days;
+            totalPrice = days * (car.promoPrice ?? car.carPrice);
+            isPeriodTaken = existingBookings.some(
+                booking => start <= new Date(booking.endDate) && end >= new Date(booking.startDate)
+            );
         }
-    }, [pickupDate, returnDate, car, existingBookings]);
+    }
 
-    const bookingSubmitHandler = async (e) => {
+     const bookingSubmitHandler = async (e) => {
         e.preventDefault();
         if (totalDays <= 0) {
             toast("Моля, изберете валиден период от време!");
@@ -112,7 +79,15 @@ export default function CarDetails() {
         }
     };
 
-    if (!car) return <p className={styles.loading}>Зареждане на детайли...</p>;
+    if (isLoading) return <p className={styles.loading}>Зареждане на детайли...</p>;
+
+    if (error) return <p className={`${styles.loading} form-error`}>{error}</p>;
+
+    if (!car) return (
+        <p className={`${styles.loading} form-error`}>
+            Автомобилът не е намерен. <Link to="/cars">Към автомобилите</Link>
+        </p>
+    );
 
     const hasPromo = car.promoPrice !== null && car.promoPrice !== undefined;
 

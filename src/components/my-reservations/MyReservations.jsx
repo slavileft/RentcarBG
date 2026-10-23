@@ -66,7 +66,7 @@ export default function MyReservations() {
         }
 
         fetchUserReservations();
-    }, [user.id]);
+    }, [user.id, accessToken]);
 
     // Функция за изтриване на резервация
     const deleteBookingHandler = async (bookingId) => {
