@@ -4,7 +4,7 @@ import styles from './MyReservations.module.css';
 import request from '../../utils/request.js';
 import AuthContext from '../../context/auth-context';
 
-export default function MyReservations({ userId }) {
+export default function MyReservations() {
     const { accessToken, user } = useContext(AuthContext);
     const [reservations, setReservations] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -15,10 +15,6 @@ export default function MyReservations({ userId }) {
     const [editReturnDate, setEditReturnDate] = useState('');
 
     useEffect(() => {
-        if (!user.id) {
-            setIsLoading(false);
-            return;
-        }
 
         async function fetchUserReservations() {
             try {

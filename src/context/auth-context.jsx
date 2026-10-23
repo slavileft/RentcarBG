@@ -47,9 +47,11 @@ export function AuthProvider({
         try {
             await authApi.logout(auth?.access_token);
 
-            setAuth(null);
         } catch (error) {
             alert(error.message);
+        }
+        finally{
+            setAuth(null);
         }
     }
 

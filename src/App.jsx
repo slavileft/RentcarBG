@@ -14,6 +14,8 @@ import About from "./components/about/About.jsx";
 import Login from "./components/login/Login.jsx";
 import Register from "./components/register/Register.jsx";
 import Logout from "./components/logout/Logout.jsx";
+import AuthGuard from "./components/guards/AuthGuard.jsx";
+import GuestGuard from "./components/guards/GuesGuard.jsx";
 
 function App() {
 
@@ -22,17 +24,25 @@ function App() {
             <Header />
 
             <Routes>
-                <Route path="/" element={<Main catalogOnly={false}/>} />
+                <Route path="/" element={<Main catalogOnly={false} />} />
                 <Route path="/cars" element={<Main catalogOnly={true} />} />
                 <Route path="/cars/:carId" element={<CarDetails />} />
                 <Route path="/transfers" element={<Transfers />} />
                 <Route path="/offers" element={<Offers />} />
                 <Route path="/contacts" element={<Contacts />} />
                 <Route path="/about" element={<About />} />
-                <Route path="/reservations" element={<MyReservations />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
                 <Route path="/logout" element={<Logout />} />
+
+                {/* only guests */}
+                <Route element={<GuestGuard />}>
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/register" element={<Register />} />
+                </Route>
+
+                {/* only logged-in users */}
+                <Route element={<AuthGuard />}>
+                    <Route path="/reservations" element={<MyReservations />} />
+                </Route>
             </Routes>
 
             <Footer />
