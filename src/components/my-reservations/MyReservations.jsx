@@ -4,6 +4,7 @@ import styles from './MyReservations.module.css';
 import request from '../../utils/request.js';
 import AuthContext from '../../context/auth-context';
 import { toast } from 'sonner';
+import { hasOverlappingBooking } from '../../utils/reservations.js';
 
 export default function MyReservations() {
     const { accessToken, user } = useContext(AuthContext);
@@ -85,9 +86,10 @@ export default function MyReservations() {
 
             // Обновяваме UI състоянието филтрирайки изтрития запис
             setReservations(prev => prev.filter(b => b.id !== bookingId));
+            toast.success("Резервацията е анулирана.");
         } catch (err) {
             console.error('Error deleting booking:', err);
-            setError('Неуспешно анулиране. Моля, опитайте отново.');
+            toast.error('Неуспешно анулиране. Моля, опитайте отново.');
         }
     };
 
@@ -134,6 +136,19 @@ export default function MyReservations() {
             : booking.car.carPrice;
         const newTotalPrice = totalDays * activePrice;
 
+        const isTaken = await hasOverlappingBooking(
+            booking.carId,
+            editPickupDate,
+            editReturnDate,
+            booking.id,
+            accessToken
+        );
+
+        if (isTaken) {
+            toast.error("Автомобилът вече е резервиран за избраните дати.");
+            return;
+        }
+
         try {
             await request(import.meta.env.VITE_REST_URL, `/Reservations?id=eq.${booking.id}`, "PATCH", { startDate: editPickupDate, endDate: editReturnDate, totalPrice: newTotalPrice }, accessToken);
 
@@ -143,9 +158,10 @@ export default function MyReservations() {
                 : b
             ));
             setEditingBookingId(null);
+            toast.success("Резервацията е обновена.");
         } catch (err) {
             console.error('Error updating booking:', err);
-            setError('Неуспешна промяна. Моля, опитайте отново.');
+            toast.error('Неуспешна промяна. Моля, опитайте отново.');
         }
     };
 
@@ -226,6 +242,7 @@ export default function MyReservations() {
                                                 <input
                                                     type="date"
                                                     value={editReturnDate}
+                                                    min={editPickupDate}
                                                     onChange={(e) => setEditReturnDate(e.target.value)}
                                                 />
                                             </div>
