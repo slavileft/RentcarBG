@@ -1,0 +1,119 @@
+.page {
+    max-width: 720px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.card {
+    background: var(--bg-white);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.carInfo {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    padding: 20px;
+    background: var(--bg-light);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.carInfo img {
+    width: 160px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.carInfo h2 {
+    margin: 0 0 6px;
+    color: var(--primary-color);
+}
+
+.location {
+    margin: 0;
+    color: var(--text-muted);
+}
+
+.form {
+    padding: 24px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.field label {
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--primary-color);
+}
+
+.field input {
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+.field input:focus {
+    outline: none;
+    border-color: var(--accent-color);
+}
+
+.summary {
+    display: flex;
+    justify-content: space-between;
+    padding: 14px 16px;
+    background: var(--bg-light);
+    border-radius: 10px;
+}
+
+.summary strong {
+    color: var(--accent-color);
+}
+
+.actions {
+    display: flex;
+    gap: 12px;
+}
+
+.btnSave,
+.btnCancel {
+    padding: 12px 22px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.btnSave {
+    background: var(--accent-color);
+    color: #fff;
+    border: none;
+}
+
+.btnSave:disabled {
+    background: var(--danger-disabled);
+    cursor: not-allowed;
+}
+
+.btnCancel {
+    background: var(--bg-light);
+    color: var(--primary-color);
+    border: 1px solid var(--border-color);
+}
+
+.message {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-muted);
+}

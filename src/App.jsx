@@ -11,6 +11,7 @@ import Contacts from "./components/contacts/Contacts.jsx";
 import Transfers from "./components/transfer/Transfers.jsx";
 import Offers from "./components/offers/Offers.jsx";
 import MyReservations from "./components/my-reservations/MyReservations.jsx";
+import EditReservation from "./components/edit-reservation/EditReservation.jsx";
 import About from "./components/about/About.jsx";
 import Login from "./components/login/Login.jsx";
 import Register from "./components/register/Register.jsx";
@@ -47,7 +48,9 @@ function App() {
                 {/* only logged-in users */}
                 <Route element={<AuthGuard />}>
                     <Route path="/reservations" element={<MyReservations />} />
+                    <Route path="/reservations/:reservationId/edit" element={<EditReservation />} />
                 </Route>
+
                 <Route path="*" element={<NotFound />} />
             </Routes>
 

@@ -1,20 +1,16 @@
 import { useEffect, useState, useContext } from 'react';
+import { Link } from 'react-router';
+import { toast } from 'sonner';
 
 import styles from './MyReservations.module.css';
 import request from '../../utils/request.js';
 import AuthContext from '../../context/auth-context';
-import { toast } from 'sonner';
-import { hasOverlappingBooking } from '../../utils/reservations.js';
 
 export default function MyReservations() {
     const { accessToken, user } = useContext(AuthContext);
     const [reservations, setReservations] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
-
-    const [editingBookingId, setEditingBookingId] = useState(null);
-    const [editPickupDate, setEditPickupDate] = useState('');
-    const [editReturnDate, setEditReturnDate] = useState('');
 
     useEffect(() => {
 
@@ -101,71 +97,6 @@ export default function MyReservations() {
         );
     }
 
-    // 1. Влизане в режим на редактиране и попълване на текущите дати
-    const startEditHandler = (booking) => {
-        setEditingBookingId(booking.id);
-        setEditPickupDate(booking.startDate);
-        setEditReturnDate(booking.endDate);
-    };
-
-    // 2. Отказ от редактиране
-    const cancelEditHandler = () => {
-        setEditingBookingId(null);
-    };
-
-    // 3. Запазване на промените (PATCH заявка)
-    const saveEditHandler = async (booking) => {
-        if (new Date(editPickupDate) > new Date(editReturnDate)) {
-            toast.error("Датата на връщане не може да бъде преди давата на вземане!");
-            return;
-        }
-
-        const start = new Date(editPickupDate);
-        const end = new Date(editReturnDate);
-        const differenceInTime = end.getTime() - start.getTime();
-        const totalDays = Math.ceil(differenceInTime / (1000 * 3600 * 24)) + 1;
-
-        if (totalDays <= 0) {
-            toast.info("Минималният период за наем е 1 ден.");
-            return;
-        }
-
-        // Преизчисляваме общата цена спрямо новия период
-        const activePrice = (booking.car.promoPrice !== null && booking.car.promoPrice !== undefined)
-            ? booking.car.promoPrice
-            : booking.car.carPrice;
-        const newTotalPrice = totalDays * activePrice;
-
-        const isTaken = await hasOverlappingBooking(
-            booking.carId,
-            editPickupDate,
-            editReturnDate,
-            booking.id,
-            accessToken
-        );
-
-        if (isTaken) {
-            toast.error("Автомобилът вече е резервиран за избраните дати.");
-            return;
-        }
-
-        try {
-            await request(import.meta.env.VITE_REST_URL, `/Reservations?id=eq.${booking.id}`, "PATCH", { startDate: editPickupDate, endDate: editReturnDate, totalPrice: newTotalPrice }, accessToken);
-
-            // Актуализираме UI състоянието на колата локално
-            setReservations(prev => prev.map(b => b.id === booking.id
-                ? { ...b, startDate: editPickupDate, endDate: editReturnDate, totalPrice: newTotalPrice }
-                : b
-            ));
-            setEditingBookingId(null);
-            toast.success("Резервацията е обновена.");
-        } catch (err) {
-            console.error('Error updating booking:', err);
-            toast.error('Неуспешна промяна. Моля, опитайте отново.');
-        }
-    };
-
-
     if (error) {
         return (
             <div className={styles.centerContainer}>
@@ -184,7 +115,6 @@ export default function MyReservations() {
             {reservations.length > 0 ? (
                 <div className={styles.reservationsList}>
                     {reservations.map((booking) => {
-                        const isEditing = editingBookingId === booking.id;
                         return (
                             <article key={booking.id} className={styles.reservationCard}>
 
@@ -211,43 +141,20 @@ export default function MyReservations() {
                                         </div>
                                     </div>
 
-                                    {/* Превключване между преглед и редактиране на датите */}
-                                    {!isEditing ? (
-                                        <div className={styles.periodBox}>
-                                            <div className={styles.dateGroup}>
-                                                <span className={styles.dateLabel}>Вземане:</span>
-                                                <strong className={styles.dateValue}>
-                                                    <i className="fa-solid fa-calendar-days"></i> {booking.startDate}
-                                                </strong>
-                                            </div>
-                                            <div className={styles.dateGroup}>
-                                                <span className={styles.dateLabel}>Връщане:</span>
-                                                <strong className={styles.dateValue}>
-                                                    <i className="fa-solid fa-calendar-days"></i> {booking.endDate}
-                                                </strong>
-                                            </div>
+                                    <div className={styles.periodBox}>
+                                        <div className={styles.dateGroup}>
+                                            <span className={styles.dateLabel}>Вземане:</span>
+                                            <strong className={styles.dateValue}>
+                                                <i className="fa-solid fa-calendar-days"></i> {booking.startDate}
+                                            </strong>
                                         </div>
-                                    ) : (
-                                        <div className={styles.editPeriodBox}>
-                                            <div className={styles.inputGroup}>
-                                                <label>Нова дата на вземане:</label>
-                                                <input
-                                                    type="date"
-                                                    value={editPickupDate}
-                                                    onChange={(e) => setEditPickupDate(e.target.value)}
-                                                />
-                                            </div>
-                                            <div className={styles.inputGroup}>
-                                                <label>Нова дата на връщане:</label>
-                                                <input
-                                                    type="date"
-                                                    value={editReturnDate}
-                                                    min={editPickupDate}
-                                                    onChange={(e) => setEditReturnDate(e.target.value)}
-                                                />
-                                            </div>
+                                        <div className={styles.dateGroup}>
+                                            <span className={styles.dateLabel}>Връщане:</span>
+                                            <strong className={styles.dateValue}>
+                                                <i className="fa-solid fa-calendar-days"></i> {booking.endDate}
+                                            </strong>
                                         </div>
-                                    )}
+                                    </div>
                                 </div>
 
                                 {/* КОЛОНА 3: Страничен блок за Цена и Бутони */}
@@ -256,38 +163,17 @@ export default function MyReservations() {
                                         <span className={styles.priceLabel}>Обща сума:</span>
                                         <span className={styles.priceValue}>{booking.totalPrice} €</span>
                                     </div>
-
-                                    {!isEditing ? (
-                                        <div className={styles.actionButtons}>
-                                            <button
-                                                onClick={() => startEditHandler(booking)}
-                                                className={styles.btnEdit}
-                                            >
-                                                <i className="fa-solid fa-pen-to-square"></i> Промени
-                                            </button>
-                                            <button
-                                                onClick={() => deleteBookingHandler(booking.id)}
-                                                className={styles.btnDelete}
-                                            >
-                                                <i className="fa-solid fa-trash-can"></i> Анулирай
-                                            </button>
-                                        </div>
-                                    ) : (
-                                        <div className={styles.actionButtons}>
-                                            <button
-                                                onClick={() => saveEditHandler(booking)}
-                                                className={styles.btnSave}
-                                            >
-                                                <i className="fa-solid fa-floppy-disk"></i> Запази
-                                            </button>
-                                            <button
-                                                onClick={cancelEditHandler}
-                                                className={styles.btnCancel}
-                                            >
-                                                Отказ
-                                            </button>
-                                        </div>
-                                    )}
+                                    <div className={styles.actionButtons}>
+                                        <Link to={`/reservations/${booking.id}/edit`} className={styles.btnEdit}>
+                                            <i className="fa-solid fa-pen-to-square"></i> Промени
+                                        </Link>
+                                        <button
+                                            onClick={() => deleteBookingHandler(booking.id)}
+                                            className={styles.btnDelete}
+                                        >
+                                            <i className="fa-solid fa-trash-can"></i> Анулирай
+                                        </button>
+                                    </div>
                                 </div>
 
                             </article>

@@ -235,6 +235,7 @@
     background-color: #2b2d42;
     color: #ffffff;
     border: none;
+    text-decoration: none;
 }
 
 .btnEdit:hover {
@@ -252,65 +253,6 @@
     color: #ffffff;
     border-color: #d90429;
     box-shadow: 0 2px 4px rgba(217, 4, 41, 0.2);
-}
-
-.btnSave {
-    background-color: #2e7d32;
-    color: #ffffff;
-    border: none;
-}
-
-.btnSave:hover {
-    background-color: #1b5e20;
-}
-
-.btnCancel {
-    background-color: transparent;
-    color: #8d99ae;
-    border: 1px solid #edf2f4;
-}
-
-.btnCancel:hover {
-    background-color: #edf2f4;
-    color: #2b2d42;
-}
-
-/* Стилизация за инлайн контейнера с датите при редактиране */
-.editPeriodBox {
-    display: flex;
-    gap: 15px;
-    background-color: #fff5f5; 
-    padding: 12px 15px;
-    border-radius: 6px;
-    border-left: 3px solid #d90429;
-}
-
-.inputGroup {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    flex: 1;
-}
-
-.inputGroup label {
-    font-size: 0.75rem;
-    color: #2b2d42;
-    font-weight: 600;
-}
-
-.inputGroup input {
-    padding: 6px 10px;
-    border: 1px solid #edf2f4;
-    border-radius: 4px;
-    font-size: 0.85rem;
-    color: #2b2d42;
-    background-color: #ffffff;
-    width: 100%;
-}
-
-.inputGroup input:focus {
-    outline: none;
-    border-color: #d90429;
 }
 
 /* Адаптивност за мобилни устройства */
