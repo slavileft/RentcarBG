@@ -172,6 +172,14 @@
     font-size: 16px;
     margin-top: 10px;
 }
+
+.loginLink {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    box-sizing: border-box;
+}
+
 /* Стара задраскана цена в детайлите */
 .oldPrice {
     text-decoration: line-through;

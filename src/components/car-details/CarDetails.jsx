@@ -9,7 +9,7 @@ import AuthContext from '../../context/auth-context';
 import Reviews from '../reviews/Reviews';
 
 export default function CarDetails() {
-    const { accessToken, user } = useContext(AuthContext);
+    const { accessToken, user, isAuthenticated } = useContext(AuthContext);
     const navigate = useNavigate();
     const routerLocation = useLocation();
     const routerState = routerLocation.state || {};
@@ -52,8 +52,14 @@ export default function CarDetails() {
 
     const bookingSubmitHandler = async (e) => {
         e.preventDefault();
+
+        if (!isAuthenticated) {
+            toast.info("Моля, влезте в профила си, за да резервирате.");
+            return;
+        }
+
         if (totalDays <= 0) {
-            toast("Моля, изберете валиден период от време!");
+            toast.error("Моля, изберете валиден период от време!");
             return;
         }
         if (isPeriodTaken) {
@@ -67,14 +73,13 @@ export default function CarDetails() {
             startDate: pickupDate,
             endDate: returnDate,
             totalPrice: totalPrice,
-            userId: user?.id
+            userId: user.id
         };
 
         try {
             await request(import.meta.env.VITE_REST_URL, "/Reservations", "POST", bookingData, accessToken);
-            if (accessToken) {
-                navigate("/reservations");
-            }
+            toast.success("Резервацията е потвърдена!");
+            navigate("/reservations");
         } catch (error) {
             toast.error(`Error submitting form:, ${error.message}`)
         }
@@ -176,13 +181,21 @@ export default function CarDetails() {
                             )}
 
                             {/* Динамично блокиране на бутона спрямо Overlap проверката */}
-                            {!isPeriodTaken ? (
+                            {!isAuthenticated && (
+                                <Link to="/login" className={`${styles.btnAccent} ${styles.loginLink}`}>
+                                    Влезте, за да резервирате
+                                </Link>
+                            )}
+
+                            {isAuthenticated && !isPeriodTaken && (
                                 <button type="submit" className={styles.btnAccent}>
                                     Потвърди резервацията
                                 </button>
-                            ) : (
+                            )}
+
+                            {isAuthenticated && isPeriodTaken && (
                                 <button type="button" className={styles.btnDisabled} disabled>
-                                    Периодът е зает
+                                    Заето за тези дати
                                 </button>
                             )}
 
