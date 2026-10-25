@@ -1,10 +1,13 @@
 import styles from './About.module.css';
+import useFetch from '../../hooks/useFetch';
 
 export default function AboutUs() {
+  const { data: reviews } = useFetch('/Reviews?order=created_at.desc&limit=3', []);
+
   return (
     <main className="main-content">
       <section className={styles.aboutContainer}>
-        
+
         <div className="section-title">
           <h2>За Нас</h2>
           <p>Професионализъм, сигурност и персонално отношение към всеки клиент</p>
@@ -18,37 +21,27 @@ export default function AboutUs() {
         </div>
 
         {/* Отзиви от клиенти */}
-        <h3 className={styles.reviewsTitle}>Какво казват клиентите за нас</h3>
-        
-        <div className={styles.reviewsGrid}>
-          <div className={styles.reviewCard}>
-            <div>
-              <div className={styles.stars}>
-                <i className="fa-solid fa-star"></i>
-                <i className="fa-solid fa-star"></i>
-                <i className="fa-solid fa-star"></i>
-                <i className="fa-solid fa-star"></i>
-                <i className="fa-solid fa-star"></i>
-              </div>
-              <p className={styles.comment}>"Професионално обслужване, без скрити такси. Много са коректни, със сигурност пак бих използвал услугите им!"</p>
-            </div>
-            <h5 className={styles.author}>— Фадли Фадлиев</h5>
-          </div>
+        {reviews.length > 0 && (
+          <>
+            <h3 className={styles.reviewsTitle}>Какво казват клиентите за нас</h3>
 
-          <div className={styles.reviewCard}>
-            <div>
-              <div className={styles.stars}>
-                <i className="fa-solid fa-star"></i>
-                <i className="fa-solid fa-star"></i>
-                <i className="fa-solid fa-star"></i>
-                <i className="fa-solid fa-star"></i>
-                <i className="fa-solid fa-star"></i>
-              </div>
-              <p className={styles.comment}>"Колата беше в отлично състояние и отговаряше на описанието на сайта. Отношението към клиентите е на високо ниво, хората са гъвкави и отзивчиви."</p>
+            <div className={styles.reviewsGrid}>
+              {reviews.map(review => (
+                <div key={review.id} className={styles.reviewCard}>
+                  <div>
+                    <div className={styles.stars}>
+                      {Array.from({ length: review.rating }, (_, i) => (
+                        <i key={i} className="fa-solid fa-star"></i>
+                      ))}
+                    </div>
+                    <p className={styles.comment}>"{review.comment}"</p>
+                  </div>
+                  <h5 className={styles.author}>- {review.userName}</h5>
+                </div>
+              ))}
             </div>
-            <h5 className={styles.author}>— Силвия Петрова</h5>
-          </div>
-        </div>
+          </>
+        )}
 
       </section>
     </main>

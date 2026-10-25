@@ -1,11 +1,12 @@
 import { useParams, useNavigate, useLocation, Link } from 'react-router';
 import { useContext, useState } from 'react';
+import { toast } from 'sonner';
 
 import styles from './CarDetails.module.css';
 import request from '../../utils/request';
 import useFetch from '../../hooks/useFetch';
 import AuthContext from '../../context/auth-context';
-import { toast } from 'sonner';
+import Reviews from '../reviews/Reviews';
 
 export default function CarDetails() {
     const { accessToken, user } = useContext(AuthContext);
@@ -49,7 +50,7 @@ export default function CarDetails() {
         }
     }
 
-     const bookingSubmitHandler = async (e) => {
+    const bookingSubmitHandler = async (e) => {
         e.preventDefault();
         if (totalDays <= 0) {
             toast("Моля, изберете валиден период от време!");
@@ -190,6 +191,7 @@ export default function CarDetails() {
                 </div>
 
             </div>
+            <Reviews carId={carId} />
         </div>
     );
 }
