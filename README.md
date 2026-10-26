@@ -7,7 +7,9 @@ leave reviews.
 
 **Live demo:** https://rentcarbg.st-lefterov.workers.dev/
 
-> The interface is in Bulgarian. 
+> The interface is in Bulgarian.
+> Example user: st.lefterov@abv.bg
+> Example user pass: 123456
 
 ## Features
 
