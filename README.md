@@ -65,7 +65,7 @@ Other scripts:
 
 | Variable | Description |
 |---|---|
-| `VITE_API_KEY` | Supabase **publishable (anon)** key. Never use a secret/service key here, because everything with a `VITE_` prefix is included in the browser bundle |
+| `VITE_API_KEY` | Supabase **publishable (anon)** key. |
 | `VITE_REST_URL` | `https://<project-ref>.supabase.co/rest/v1` |
 | `VITE_AUTH_URL` | `https://<project-ref>.supabase.co/auth/v1` |
 
