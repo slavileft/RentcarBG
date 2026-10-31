@@ -145,4 +145,7 @@
     .contactsGrid {
         grid-template-columns: 1fr;
     }
+    .contactsContainer { padding: 30px 16px; }
+    .contactsGrid { gap: 24px; }
+    .infoBox, .formBox { padding: 20px; }
 }

@@ -131,4 +131,6 @@
     .routeGrid {
         grid-template-columns: 1fr;
     }
+    .transfersContainer { padding: 24px 16px; }
+    .formBox { padding: 24px 18px; }
 }

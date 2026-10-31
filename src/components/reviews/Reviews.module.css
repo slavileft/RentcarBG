@@ -159,3 +159,9 @@
     background: var(--accent-color);
     color: #fff;
 }
+@media (max-width: 768px) {
+    .reviews { margin-top: 30px; padding: 24px 0 0; }
+    .header { flex-wrap: wrap; gap: 8px 16px; }
+    .ratingInput button { padding: 6px 4px; }   /* bigger finger target */
+    .btnSubmit { width: 100%; }
+}

@@ -97,3 +97,7 @@
 .switchAuth a:hover {
     text-decoration: underline;
 }
+@media (max-width: 480px) {
+    .authContainer { margin: 30px auto; }
+    .authBox { padding: 28px 20px; }
+}

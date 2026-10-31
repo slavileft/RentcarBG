@@ -81,3 +81,8 @@
     border-top: 1px solid #f8f9fa;
     padding-top: 10px;
 }
+@media (max-width: 768px) {
+    .aboutContainer { padding: 30px 16px; }
+    .presentationBox { padding: 24px; }
+    .reviewCard { padding: 20px; }
+}

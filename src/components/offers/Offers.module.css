@@ -25,3 +25,7 @@
     padding: 40px 0;
     font-size: 16px;
 }
+@media (max-width: 768px) {
+    .offersContainer { padding: 24px 16px; }
+    .titleSection h2 { font-size: 24px; }
+}

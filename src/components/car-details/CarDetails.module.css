@@ -199,3 +199,9 @@
     display: flex;
     align-items: baseline;
 }
+@media (max-width: 768px) {
+    .detailsContainer { padding: 20px 16px; }
+    .detailsGrid { gap: 24px; }
+    .carInfoSide h2 { font-size: 24px; }
+    .bookingBox { padding: 20px; }
+}

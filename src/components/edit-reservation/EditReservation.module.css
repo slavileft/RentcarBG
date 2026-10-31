@@ -117,3 +117,10 @@
     padding: 60px 20px;
     color: var(--text-muted);
 }
+@media (max-width: 600px) {
+    .page { margin: 20px auto; padding: 0 16px; }
+    .carInfo { flex-direction: column; align-items: flex-start; }
+    .carInfo img { width: 100%; height: 180px; }
+    .actions { flex-direction: column; }
+    .btnSave, .btnCancel { width: 100%; text-align: center; }
+}
