@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useRef, useEffect } from "react";
 import { NavLink, Link } from "react-router";
 import AuthContext from "../../context/auth-context";
 
@@ -11,8 +11,31 @@ export default function Header() {
     // 2. a function that closes it
     const closeMenu = () => setIsMenuOpen(false);
 
+    // points at the <header> element, so we can check where a tap happened
+    const headerRef = useRef(null);
+
+    // close the menu when the user taps outside the header
+    useEffect(() => {
+        if (!isMenuOpen) {
+            return;                       // menu closed: nothing to listen for
+        }
+
+        const handlePointerDown = (event) => {
+            if (headerRef.current && !headerRef.current.contains(event.target)) {
+                setIsMenuOpen(false);
+            }
+        };
+
+        document.addEventListener("pointerdown", handlePointerDown);
+
+        // cleanup: runs when the menu closes or the header disappears
+        return () => {
+            document.removeEventListener("pointerdown", handlePointerDown);
+        };
+    }, [isMenuOpen]);
+
     return (
-        <header className="main-header">
+        <header className="main-header" ref={headerRef}>
             <div className="container header-flex">
                 <div className="logo">
                     <Link to="/">RENTCAR<span>.bg</span></Link>

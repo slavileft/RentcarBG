@@ -443,15 +443,18 @@ a {
         cursor: pointer;
     }
 
-    /* the menu: hidden by default, full width below the logo row */
     .header-menu {
         display: none;
-        flex-basis: 100%;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
         flex-direction: column;
         gap: 14px;
-        margin-top: 10px;
-        padding-top: 6px;
-        border-top: 1px solid var(--border-color);
+        padding: 10px 16px 18px;
+        background: var(--bg-white);
+        border-bottom: 1px solid var(--border-color);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
     }
 
     .header-menu.open {
